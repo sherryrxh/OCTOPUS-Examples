@@ -6,6 +6,7 @@ remove( list=ls() )
 
 library( "OCTOPUS", lib.loc = "RLibrary" )
 
+#This is just for running on the grid
 if (interactive() || Sys.getenv("SGE_TASK_ID") == "") {
     Sys.setenv(SGE_TASK_ID=1)
 }
@@ -35,6 +36,7 @@ save( cTrialDesign, file="cTrialDesign.RData" )
 #  As a general best practice it is good to remove all objects in the global environment just to make sure they are not inadvertently used.
 #  The only object that is needed is the cSimulation object.
 rm( list=(ls()[ls()!="cSimulation" ]))
+gdConvWeeksToMonths <- 12/52    #Global variable to convert weeks to months
 
 gDebug <- FALSE
 
@@ -53,7 +55,7 @@ RunSimulation( cSimulation )
 # then creating an R markdown document 
 
 # Due to a bug in the BuildSimulationResultsDataSet( ) we need to run at lease nSGETask = 2
-vSGETasks <- 2:20  # This will give us 100 reps (20 * 5)
+vSGETasks <- 2:50  # This will give us 250 reps (50 * 5)
 for ( nSGETask in vSGETasks )
 {
     gDebug <- FALSE

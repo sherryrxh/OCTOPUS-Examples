@@ -26,6 +26,8 @@ R Code
 Begin with the BuildMe.R file.    This file loads the OCTOPUS package and sources the design file as well as the new files 
 for the binary outcome and the new analysis. 
 
-The file TrialDesign.R contains the function necessary to setup the design object.
-The file SimulationDesign.R contains the functions necessary to setup the simulation design.
+The file TrialDesign.R contains the function necessary to setup the design object.  This is all about how the trial is designed such 
+as analysis, decisions and number of ISAs, ect.
+
+The file SimulationDesign.R contains the functions necessary to setup the simulation design.  This is HOW we simulate the data such as patient outcomes and recrutiment ect. 
 

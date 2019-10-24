@@ -5,9 +5,11 @@
 #   TODO: Test this function.
 ################################################################################################### #
 
+#This function with the .Binary is related to the class( cSimOutcomes ) detailed on line 27 of SimulationDesign.R
+
 SimPatientOutcomes.Binary <- function(  cSimOutcomes, cISADesign, dfPatCovISA )
 {
-    print( "Executing SimPatientOutcomes.Binary ...")
+    #print( "Executing SimPatientOutcomes.Binary ...")
     if( !is.null(  dfPatCovISA  ) )
         stop( "SimPatientOutcomes.Binary is not designed to incorporate patient covariates and  dfPatCovISA  is not NULL.")
     

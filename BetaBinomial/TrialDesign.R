@@ -12,20 +12,28 @@ SetupTrialDesign <- function()
     dConvWeeksToMonths <- 12/52
     
     # Options for borrowing "NoBorrowing" or "AllControls"
-    strBorrow         <- "AllControls"
-    strModel          <- "BetaBinomial"
-    bIncreaseParam    <- TRUE
-    dMAV              <- 0.1
-    vPUpper           <- c( 1.0, 1.0 )
-    vPLower           <- c( 0.0, 0.0 )
-    dFinalPUpper      <- 0.8
-    dFinalPLower      <- 0.1
+    dWeightNonISAPatients <- 1.0
+    strBorrow             <- "AllControls"
+    strModel              <- "BetaBinomial"
+    bIncreaseParam        <- TRUE
+    dMAV                  <- 0.1
     
-    vQtyPats          <- c( 50, 50 )  # Control, Treatment
-    vMinQtyPats       <- c( 25, 100 )
-    vObsTimeInMonths  <- c( 6 )  # patients have outcome observed at 6 months
-    vMinFUTime        <- c( 6, 6)
-    dQtyMonthsBtwIA   <- 1
+    #Decision boundaries - Interim
+    vPUpper               <- c( 0.995, 0.995 )    #If Pr( delta > MAV | data ) > vUpper  --> Go
+    vPLower               <- c( 0.01, 0.01 )  #If Pr( delta > MAV | data ) < vPLower  --> NO Go
+    
+    #Decision boundaries - Final analysis
+    dFinalPUpper          <- 0.8           #If Pr( delta > MAV | data ) > dFinalPUpper  --> Go
+    dFinalPLower          <- 0.1           #If Pr( delta > MAV | data ) < dFinalPLower  --> No Go
+        
+    vQtyPats              <- c( 50, 50 )  # Control, Treatment
+        
+    vObsTimeInMonths      <- c( 6 )  # patients have outcome observed at 6 months
+    
+    #Setup the analysis times
+    vMinQtyPats           <- c( 50, 100 )   # Start the analysis when 25 patients have 6 months of data
+    vMinFUTime            <- c( 6, 6)
+    dQtyMonthsBtwIA       <- 0
     
     
     ########################################################################.
@@ -36,52 +44,54 @@ SetupTrialDesign <- function()
     vPriorA   <- c( 0.2, 0.2 )
     vPriorB   <- c( 0.8, 0.8 )
     
-    cISA1Info <- CreateISA( vQtyPats         = vQtyPats,
-                            vTrtLab          = c( 1, 2 ),
-                            vObsTimeInMonths = vObsTimeInMonths,
-                            dMAV             = dMAV,
-                            vPUpper          = vPUpper,
-                            vPLower          = vPLower,
-                            dFinalPUpper     = dFinalPUpper,
-                            dFinalPLower     = dFinalPLower,
-                            bIncreaseParam   = bIncreaseParam,
-                            strBorrow        = strBorrow,
-                            strModel         = strModel,
-                            vMinQtyPats      = vMinQtyPats,
-                            vMinFUTime       = vMinFUTime,
-                            dQtyMonthsBtwIA  = dQtyMonthsBtwIA,
-                            vPriorA          = vPriorA,
-                            vPriorB          = vPriorB )
-    
+    cISA1Info <- CreateISA( vQtyPats              = vQtyPats,
+                            vTrtLab               = c( 1, 2 ),
+                            vPriorA               = vPriorA,
+                            vPriorB               = vPriorB,
+                            dWeightNonISAPatients = dWeightNonISAPatients,
+                            vObsTimeInMonths      = vObsTimeInMonths,
+                            dMAV                  = dMAV,
+                            vPUpper               = vPUpper,
+                            vPLower               = vPLower,
+                            dFinalPUpper          = dFinalPUpper,
+                            dFinalPLower          = dFinalPLower,
+                            bIncreaseParam        = bIncreaseParam,
+                            strBorrow             = strBorrow,
+                            strModel              = strModel,
+                            vMinQtyPats           = vMinQtyPats,
+                            vMinFUTime            = vMinFUTime,
+                            dQtyMonthsBtwIA       = dQtyMonthsBtwIA )
+         
     
     ########################################################################.
     #  ISA 2 Information                                                ####
     ########################################################################.
     
     # Control, Treatment - For ISA 2 we want more patient on Treatment since we can borrow
-    vQtyPats     <- c( 25, 75 )  
+    vQtyPats     <- c( 35,65 )  
     
     # Prior parameters of the Beta( A, B) for Control { Beta( vPriorA[1], vPriorB[1]) } and  
     # Treatment { Beta( vPriorA[ 2 ], vPriorB[ 2 ] ) ]
     vPriorA   <- c( 0.2, 0.2 )
     vPriorB   <- c( 0.8, 0.8 )
     
-    cISA2Info <-CreateISA( vQtyPats         = vQtyPats,
-                           vTrtLab          = c( 1, 3 ),
-                           vObsTimeInMonths = vObsTimeInMonths,
-                           dMAV             = dMAV,
-                           vPUpper          = vPUpper,
-                           vPLower          = vPLower,
-                           dFinalPUpper     = dFinalPUpper,
-                           dFinalPLower     = dFinalPLower,
-                           bIncreaseParam   = bIncreaseParam,
-                           strBorrow        = strBorrow,
-                           strModel         = strModel,
-                           vMinQtyPats      = vMinQtyPats,
-                           vMinFUTime       = vMinFUTime,
-                           dQtyMonthsBtwIA  = dQtyMonthsBtwIA,
-                           vPriorA          = vPriorA,
-                           vPriorB          = vPriorB  )
+    cISA2Info <-CreateISA( vQtyPats              = vQtyPats,
+                           vTrtLab               = c( 1, 3 ),
+                           vPriorA               = vPriorA,
+                           vPriorB               = vPriorB,
+                           dWeightNonISAPatients = dWeightNonISAPatients,
+                           vObsTimeInMonths      = vObsTimeInMonths,
+                           dMAV                  = dMAV,
+                           vPUpper               = vPUpper,
+                           vPLower               = vPLower,
+                           dFinalPUpper          = dFinalPUpper,
+                           dFinalPLower          = dFinalPLower,
+                           bIncreaseParam        = bIncreaseParam,
+                           strBorrow             = strBorrow,
+                           strModel              = strModel,
+                           vMinQtyPats           = vMinQtyPats,
+                           vMinFUTime            = vMinFUTime,
+                           dQtyMonthsBtwIA       = dQtyMonthsBtwIA )
     
     
     ########################################################################.
@@ -95,22 +105,23 @@ SetupTrialDesign <- function()
     vPriorA   <- c( 0.2, 0.2 )
     vPriorB   <- c( 0.8, 0.8 )
     
-    cISA3Info <-CreateISA( vQtyPats         = vQtyPats,
-                           vTrtLab          = c( 1, 4 ),
-                           vObsTimeInMonths = vObsTimeInMonths,
-                           dMAV             = dMAV,
-                           vPUpper          = vPUpper,
-                           vPLower          = vPLower,
-                           dFinalPUpper     = dFinalPUpper,
-                           dFinalPLower     = dFinalPLower,
-                           bIncreaseParam   = bIncreaseParam,
-                           strBorrow        = strBorrow,
-                           strModel         = strModel,
-                           vMinQtyPats      = vMinQtyPats,
-                           vMinFUTime       = vMinFUTime,
-                           dQtyMonthsBtwIA  = dQtyMonthsBtwIA,
-                           vPriorA          = vPriorA,
-                           vPriorB          = vPriorB  )
+    cISA3Info <-CreateISA( vQtyPats              = vQtyPats,
+                           vTrtLab               = c( 1, 4 ),
+                           vPriorA               = vPriorA,
+                           vPriorB               = vPriorB,
+                           dWeightNonISAPatients = dWeightNonISAPatients,
+                           vObsTimeInMonths      = vObsTimeInMonths,
+                           dMAV                  = dMAV,
+                           vPUpper               = vPUpper,
+                           vPLower               = vPLower,
+                           dFinalPUpper          = dFinalPUpper,
+                           dFinalPLower          = dFinalPLower,
+                           bIncreaseParam        = bIncreaseParam,
+                           strBorrow             = strBorrow,
+                           strModel              = strModel,
+                           vMinQtyPats           = vMinQtyPats,
+                           vMinFUTime            = vMinFUTime,
+                           dQtyMonthsBtwIA       = dQtyMonthsBtwIA )
     
     
     

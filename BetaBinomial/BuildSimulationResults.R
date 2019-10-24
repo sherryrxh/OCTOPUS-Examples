@@ -3,7 +3,7 @@
 library( OCTOPUS )
 source( "PostProcess.R")
 
-BuildSimulationResultsDataSet( )
+simsCombined <- BuildSimulationResultsDataSet( )
 
 lResults <- ProcessSimulationResults( )
 dfResSub <- lResults$mResults   #[ lResults$mResults$scenario <=7, ]

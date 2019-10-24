@@ -12,7 +12,7 @@
 #############################################################################################################################.
 RunAnalysis.BetaBinomial <- function( cAnalysis, lDataAna,  nISAAnalysisIndx, bIsFinalISAAnalysis, cRandomizer )
 {
-    print( paste( "RunAnalysis.BetaBinomial "))
+    #print( paste( "RunAnalysis.BetaBinomial "))
   
    # Prior are in cAnalysis$vPriorA and cAnalysis$vPriorB
   
@@ -20,7 +20,9 @@ RunAnalysis.BetaBinomial <- function( cAnalysis, lDataAna,  nISAAnalysisIndx, bI
     vTrt <- lDataAna$vTrt
     vOut <- lDataAna$vOut
     
+    nISA <- vISA[1]
     # Using the is.na because it could be that a patient has not had the outcome observed at the time of the analysis
+    vISA <- vISA[ !is.na( vOut ) ]
     vTrt <- vTrt[ !is.na( vOut ) ]
     vOut <- vOut[ !is.na( vOut ) ]
     
@@ -30,13 +32,29 @@ RunAnalysis.BetaBinomial <- function( cAnalysis, lDataAna,  nISAAnalysisIndx, bI
     dPostATrt  <- cAnalysis$vPriorA[ 2 ]
     dPostBTrt  <- cAnalysis$vPriorB[ 2 ]
     
-    #Compute Posterior Paramters - Control treatment 
-    nNCtrl       <- length( vTrt[ vTrt == 1 ] )           # Number of patient on Control
-    nQtyRespCtrl <- sum( vOut[ vTrt == 1] )               # Number of Reponsers (vOut == 1)
-    dPostACtrl   <- dPostACtrl + nQtyRespCtrl             # Posterior A = Prior A + Number of responders
-    dPostBCtrl   <- dPostBCtrl + nNCtrl - nQtyRespCtrl    # Posterior B = Prior B + Number of non-responders = Prior B + Number of Patients - # of Responders
     
-    #Compute Posterior Paramters - Treatment 
+    # If the weight is 1 then doing full borrowing, if weight = 0 then no borrowing
+    dWeightPatientsOutsideISA <- cAnalysis$dWeightNonISAPatients
+    
+    
+    #Compute Posterior Paramters - Control treatment 
+    nNCtrlInISA          <- length( vTrt[ vTrt == 1 & vISA == nISA ] )  # Number of patient on Control in the current ISA
+    nNCtrlNotInISA       <- length( vTrt[ vTrt == 1 & vISA != nISA ] )  # Number of patient on Control in OTHER ISAs
+    
+    nQtyRespCtrlInISA    <- sum( vOut[ vTrt == 1 & vISA == nISA ] )     # Number of responses on Control in current ISA
+    nQtyRespCtrlNotInISA <- sum( vOut[ vTrt == 1 & vISA != nISA ] )     # Number of responses on Control in OTHER ISAs
+    
+    # Update Posterior for Control ####
+    # Posterior A = Prior A + Number of responders in ISA + Weight * Number of responders NOT in ISA
+    dPostACtrl   <- dPostACtrl + nQtyRespCtrlInISA + dWeightPatientsOutsideISA * nQtyRespCtrlNotInISA 
+    
+    # Posterior B = Prior B + Number of non-responders in ISA + Weight * Number of non-responders NOT in ISA
+    dPostBCtrl   <- dPostBCtrl +  ( nNCtrlInISA - nQtyRespCtrlInISA ) 
+    dPostBCtrl   <- dPostBCtrl + dWeightPatientsOutsideISA * ( nQtyRespCtrlNotInISA - nQtyRespCtrlNotInISA )     
+   
+     
+    # Compute Posterior Paramters - Treatment ##### 
+    # Note: Only the control data is "borrowed" from other ISAs so no need to change anything for the treatment
     nNTrt        <- length( vTrt[ vTrt != 1 ] )
     nQtyRespTrt  <- sum( vOut[ vTrt != 1] )
     dPostATrt    <- dPostATrt + nQtyRespTrt
@@ -49,18 +67,15 @@ RunAnalysis.BetaBinomial <- function( cAnalysis, lDataAna,  nISAAnalysisIndx, bI
       # This is for debugging and should not be hit
       browser()
     }
-    print( paste( "Number of patinets: ", length( vTrt )," Q_C ~ Beta( ",dPostACtrl, dPostBCtrl , "), Q_T ~ Beta( ", dPostATrt, ", ", dPostBTrt, ")"))
-    
-    #print( paste( "Number of patinets: ", length( vTrt )," Q_C ~ Beta( ",dPostACtrl, dPostACtrl , "), Q_T ~ Beta( ", dPostATrt, ", ", dPostBTrt, ")"))
-    
-    #dPrGrtMAV  <- ProbX1GrX2PlusDelta( dPostATrt,  dPostBTrt,
-    #                                   dPostACtrl, dPostACtrl,
-    #                                  cAnalysis$dMAV )  
+    #print( paste( "Number of patinets: ", length( vTrt )," Q_C ~ Beta( ",dPostACtrl, dPostBCtrl , "), Q_T ~ Beta( ", dPostATrt, ", ", dPostBTrt, ")"))
+    #
+   
     
     dPrGrtMAV  <- ProbX1GrX2PlusDelta( dPostATrt,  dPostBTrt,
                                        dPostACtrl, dPostBCtrl,
                                        cAnalysis$dMAV )  
    
+    #print( paste( "Pr( Q_Trt > Q_Ctrl + MAV ) = ", dPrGrtMAV ))
     lCutoff    <- GetBayesianCutoffs( cAnalysis, nISAAnalysisIndx, bIsFinalISAAnalysis )
     
     
