@@ -1,1 +1,1 @@
-# OCTOPUS-Examples
+# OCTOPUS Beta-Binomial Example
