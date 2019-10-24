@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: CheckISAEnrollmentStatus.default</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for CheckISAEnrollmentStatus.default {OCTOPUS}"><tr><td>CheckISAEnrollmentStatus.default {OCTOPUS}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>CheckISAEnrollmentStatus.default</h2>
+
+<h3>Description</h3>
+
+<p>CheckISAEnrollmentStatus.default  This function will check the cRandomzier to make sure if an ISA is open for the covariate group dfCov
+Two cases
+If No covaraite - dfCov = NULL then  vEnrollmentStatus = vISAStatus
+If Covariates - dfCov != NULL then vEnrollmentStatus = vISAStatus but if an ISA does not enroll for dfCov the value will be 0, indicating it is not open.
+Essentially, if an ISA is open for dfCov the value in vRetISAStatus = 1, if not it will be a value != 1
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## Default S3 method:
+CheckISAEnrollmentStatus(cRandomizer, vISAStatus, dfCov)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>OCTOPUS</em> version 1.3.0.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

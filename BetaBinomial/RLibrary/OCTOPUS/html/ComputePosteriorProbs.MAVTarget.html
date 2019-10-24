@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: ComputePosteriorProbs.MAVTargety</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for ComputePosteriorProbs.MAVTarget {OCTOPUS}"><tr><td>ComputePosteriorProbs.MAVTarget {OCTOPUS}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>ComputePosteriorProbs.MAVTargety</h2>
+
+<h3>Description</h3>
+
+<p>Used in a trial with a Bayesian analysis and parameter of interest <i>&theta;</i>, where
+the decisions are based one posterior probabilities Pr(  <i>&theta;_T</i> &gt; MAV |data ).
+This function returns a list with dPrGrtMAV, dMAVCutoff and dTVCutoff.  0 &lt;= dMAVCutoff and dTVCutoff &lt;= 1
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'MAVTarget'
+ComputePosteriorProbs(cAnalysis, nISAAnalysisIndx,
+  bIsFinalISAAnalysis, lSamples)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>nISAAnalysisIndx</code></td>
+<td>
+<p>A the index of the analysis</p>
+</td></tr>
+<tr valign="top"><td><code>bIsFinalISAAnalysis</code></td>
+<td>
+<p>TRUE or FALSE to indicate if this is the final analysis. Typically, used
+in a Bayesian design such that the final analysis can have different cutoff values.
+dTVCutoff</p>
+</td></tr>
+<tr valign="top"><td><code>lSamples</code></td>
+<td>
+<p>List with vPostSamp that are samples of the posterior of
+<i>&theta;</i> the parameter of interest.</p>
+</td></tr>
+<tr valign="top"><td><code>cAnalysis$vMAVCutoff</code></td>
+<td>
+<p>A vector of cutoffs for the MAV at each analysis.</p>
+</td></tr>
+<tr valign="top"><td><code>cAnalysis$vTVCutoff</code></td>
+<td>
+<p>A vector of cutoffs for the TV.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>List with three values dPrGrtMAV,  dMAVCutoff and dTVCutoff
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>OCTOPUS</em> version 1.3.0.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: RandomizeWithinISA</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for RandomizeWithinISA {OCTOPUS}"><tr><td>RandomizeWithinISA {OCTOPUS}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>RandomizeWithinISA</h2>
+
+<h3>Description</h3>
+
+<p> This function is used in close connection with InitializeISARandomizer and
+if a new version of this fuction is developed a new version InitializeISARandomizer with the same
+class is required.  RandomizeWithInISA should return a list with at least the following items
+nTrt - The treatment within the ISA that the patient should receive
+cISARand - the same is cISARand but if it is updates this allows the caller to get the update. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+RandomizeWithinISA(cISARand, dCurrentTime)
+
+## Default S3 method:
+RandomizeWithinISA(cISARand, dCurrentTime)
+
+## S3 method for class 'EqualRandomizer'
+RandomizeWithinISA(cISARand, dCurrentTime)
+
+## S3 method for class 'POCRandomizer'
+RandomizeWithinISA(cISARand, dCurrentTime)
+
+## S3 method for class 'DelayedStartRandomizer'
+RandomizeWithinISA(cISARand, dCurrentTime)
+</pre>
+
+
+<h3>Methods (by class)</h3>
+
+
+<ul>
+<li> <p><code>default</code>:  Because several options are provided and there in no well defined default
+an stop error occurs if you call the default method. 
+</p>
+</li>
+<li> <p><code>EqualRandomizer</code>:  Patients are randomized equally/fairly amount the treatments in
+the ISA. 
+</p>
+</li>
+<li> <p><code>POCRandomizer</code>:  This randomzier will randomize the first patients to a select
+set of arms or doses in the ISA (eg a POC phase).  The remaining arms or doses are opened based on the number of intitial patients. 
+</p>
+</li>
+<li> <p><code>DelayedStartRandomizer</code>:  This version will randomize the first patients to a select set of arms or doses in the ISA (eg a POC phase)
+The remaining arms or doses are opened based on the provided times to open. 
+</p>
+</li></ul>
+
+
+<h3>See Also</h3>
+
+<p>InitializeISARandomizer.EqualRandomizer
+</p>
+<p>InitializeISARandomizer.POCRandomizer
+</p>
+<p>InitializeISARandomizer.DelayedStartRandomizer
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>OCTOPUS</em> version 1.3.0.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

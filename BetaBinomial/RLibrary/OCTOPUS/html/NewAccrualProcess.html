@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: NewAccrualProcess</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for NewAccrualProcess {OCTOPUS}"><tr><td>NewAccrualProcess {OCTOPUS}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>NewAccrualProcess</h2>
+
+<h3>Description</h3>
+
+<p>This class can be used to simulate the arrival times of patients in a simulated trial.  The function
+NewAccrualProcess returns an object used to simulate arrival times for patients by calling
+The class assumes
+a Poisson process and allows the user to several options, such as ramp up the accrual rate which typically
+occurs in clinical trials.
+#'
+For this function you must supply nMaxQtyPatients and/or nMaxMonthsOfAccrual
+Accrual will continue until either the max qty of patient or max months of accrual is reached,
+which ever comes first
+
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+NewAccrualProcess(vQtyPatsPerMonth, nMaxQtyPatients, nMaxMonthsOfAccrual)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>vQtyPatsPerMonth</code></td>
+<td>
+<p>A vector (possibly of length 1 for constant rate) for the number of patient accrued each month</p>
+</td></tr>
+<tr valign="top"><td><code>nMaxQtyPatients</code></td>
+<td>
+<p>The maximum of of patient recruitment times to simulate.</p>
+</td></tr>
+<tr valign="top"><td><code>nMaxMonthsOfAccrual</code></td>
+<td>
+<p>The maximum number of months that you want to simulate accrual for.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p> If both nMaxQtyPatients and nMaxMonthsOfAccrual are supplied then the returned vector will be at most
+nMaxQtyPatients in length.  However, when nMaxMonthsOfAccrual all values will be less than nMaxMonthsOfAccrual so the
+length of the returned vector could be less than nMaxQtyPatient.  
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="SimulateArrivalTimes.html">SimulateArrivalTimes</a></code> for simulating the arrival times once you have created the object..
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+  vPatsPerMonth  &lt;- c(5, 10, 15, 20, 30, 40, 50) # The ramp up in expected Pat/month
+  nMaxQtyPats    &lt;- 100  # Maximum of 100 patients
+  ap             &lt;- NewAccrualProcess( vQtyPatsPerMonth = vPatsPerMonth, nMaxQtyPatients = nMaxQtyPats )
+  vAccTimes      &lt;- SimulateArrivalTimes( ap )
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>OCTOPUS</em> version 1.3.0.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

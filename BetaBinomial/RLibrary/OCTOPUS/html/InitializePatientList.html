@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: InitializePatientList</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for InitializePatientList {OCTOPUS}"><tr><td>InitializePatientList {OCTOPUS}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>InitializePatientList</h2>
+
+<h3>Description</h3>
+
+<p> This function will create a list to store information about the current patients in the trial.
+The list will contain the following elements:
+vStartTimes        The start times for each patient in the trial,
+vTrt               Vector of treatment labels in the platform
+vISA               Vector of ISA labels in the trial,
+lPatOut            patient outcomes as a list (see more below),
+vCurrentQtyPatsISA The number of patients in each ISA,
+vTrtLab            The treatment labeled, taken directly from the cTrialDesign,
+vISALab            The ISA labels, taken directly from the cTrialDesign
+vQtyPatsArmISA     Number of patients in each arm in each ISA
+</p>
+<p>lPatOut            A list of patient outcomes.  The list will contain a
+mOutXX structure for each outcome where XX is the outcome number
+vObsTimeXX The observed time for each outcome.
+The class( mOutXX ) should be the same as the vISAAnalysis[[ XX ]]
+</p>
+<p>For multiple ISAs, the first ISA is used to determine how to process the outcome data. Specifically,
+the class elements are copied from the first ISA analysis object vISAAnalysis.  That is,
+the class of mOutXX is class( cTrialDesign$cISADesigns[[1]]$cISAAnalysis$vAnalysis[[ XX ]] )
+</p>
+<p>The returned list will not have any patients in it but will be initialized. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## Default S3 method:
+InitializePatientList(cTrialDesign)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>OCTOPUS</em> version 1.3.0.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

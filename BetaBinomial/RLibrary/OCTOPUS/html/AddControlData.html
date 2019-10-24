@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: AddControlData</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for AddControlData {OCTOPUS}"><tr><td>AddControlData {OCTOPUS}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>AddControlData</h2>
+
+<h3>Description</h3>
+
+<p>Used to include control data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+AddControlData(cISAData, cSourceData, nISA)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>cISAData</code></td>
+<td>
+<p>The ISA object, the class( cISAData ) will determine which version of AddControlData is utilized.</p>
+</td></tr>
+<tr valign="top"><td><code>cSourceData</code></td>
+<td>
+<p>The object with the patient data to be used as the patient database for pulling control data from.  THis object must have
+the following elements:
+1) cSourceData$vIND
+2) cSourceData$vOut
+3) cSourceData$vTime
+4) cSourceData$vTrt</p>
+</td></tr>
+<tr valign="top"><td><code>nISA</code></td>
+<td>
+<p>An integer for the ISA number.  As the data is added to the control in may be necessary to know what ISA the data came from.</p>
+</td></tr>
+</table>
+
+<hr /><div style="text-align: center;">[Package <em>OCTOPUS</em> version 1.3.0.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

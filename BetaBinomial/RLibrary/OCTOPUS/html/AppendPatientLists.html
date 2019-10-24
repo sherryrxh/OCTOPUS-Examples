@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: AppendPatientLists</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for AppendPatientLists {OCTOPUS}"><tr><td>AppendPatientLists {OCTOPUS}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>AppendPatientLists</h2>
+
+<h3>Description</h3>
+
+<p>This function takes two lists of simulated outcome (eg from SimulateAllPatientOutcomes) and appends such that the structure of the returned list is
+the same as the source lists.  For elements that are a matrix it will utilize rbind, for vectors c() is used.
+The main purpose of this function is during simulaitons if the original SimulateAllPatients did not generate enought patients
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+AppendPatientLists(lList1, lList2, vNamesToExclude = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>lList1</code></td>
+<td>
+<p>- The first elment list where lList2 is appended to.</p>
+</td></tr>
+<tr valign="top"><td><code>lList2</code></td>
+<td>
+<p>- The second list</p>
+</td></tr>
+<tr valign="top"><td><code>vNamesToExclude</code></td>
+<td>
+<p>a vector of the names to include in the appending.  Names not included are coppied from lList1 with nothing appended.</p>
+</td></tr>
+</table>
+
+<hr /><div style="text-align: center;">[Package <em>OCTOPUS</em> version 1.3.0.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

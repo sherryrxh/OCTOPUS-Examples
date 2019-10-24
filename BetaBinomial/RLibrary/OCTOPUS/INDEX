@@ -1,0 +1,200 @@
+AddControlData          AddControlData
+AddControlData.ProcessReptMeas
+                        AddControlData.ProcessReptMeasChngBaseline
+AddControlData.ProcessReptMeasChngBaseline
+                        AddControlData.ProcessReptMeasChngBaseline
+AddControlData.ProcessSingleTimeOutcome
+                        AddControlData.ProcessSingleTimeOutcome
+AddPatient              AddPatient
+AppendPatientLists      AppendPatientLists
+BuildSimulationResultsDataSet
+                        BuildSimulationResultsDataSet
+CheckGlobalVariables    CheckGlobalVariables
+CheckISAEnrollmentStatus
+                        CheckISAEnrollmentStatus
+CheckISAEnrollmentStatus.default
+                        CheckISAEnrollmentStatus.default
+CheckNextTrialAnalysisTime
+                        CheckNextTrialAnalysisTime
+CheckNextTrialAnalysisTime.default
+                        CheckNextTrialAnalysisTime.default
+CheckTrialMonitor       Check Trial Monitor
+CheckTrialMonitor.default
+                        Check Trial Monitor
+ComputePosteriorProbs   ComputePosteriorProbs
+ComputePosteriorProbs.MAVOnly
+                        ComputePosteriorProbs.MAVOnly
+ComputePosteriorProbs.MAVTarget
+                        ComputePosteriorProbs.MAVTargety
+ComputePosteriorProbs.default
+                        ComputePosteriorProbs.default
+CopyCovariates          CopyCovariates
+CopyCovariates.default
+                        CopyCovariates.default
+CreateDataSetForAnalysis
+                        CreateDataSetForAnalysis
+CreateDataSetForAnalysis.default
+                        CreateDataSetForAnalysis.default
+EstimateNumberOfPatientToSimulate
+                        EstimateNumberOfPatientToSimulate
+EstimateNumberOfPatientToSimulate.Categorical
+                        EstimateNumberOfPatientToSimulate.Categorical
+EstimateNumberOfPatientToSimulate.NULL
+                        EstimateNumberOfPatientToSimulate.NULL
+EstimateNumberOfPatientToSimulate.default
+                        EstimateNumberOfPatientToSimulate.default
+GetBayesianCutoffs      GetBayesianCutoffs
+GetBayesianCutoffs.MAVOnly
+                        GetBayesianCutoffs.MAVOnly
+GetBayesianCutoffs.MAVTarget
+                        GetBayesianCutoffs.MAVOnly
+GetBayesianCutoffs.default
+                        GetBayesianCutoffs.default
+GetCILimits             GetCILimits
+GetFinalISAAnalysisTime
+                        GetFinalISAAnalysisTime
+GetFinalISAAnalysisTime.default
+                        #' export GetFinalISAAnalysisTime.default <-
+                        function( cISADesigns, nISA, lEnrolledPats )
+                        stop( paste("ERROR: The
+                        GetFinalISAAnalysisTime.default is not defined
+                        class( GetFinalISAAnalysisTime )=",
+                        class(cISADesigns) ) )
+GetLSDiffGLS            GetLSDiffGLS
+InitializeISARandomizer
+                        InitializeISARandomizer
+InitializeISARandomizer.DelayedStartRandomizer
+                        InitializeISARandomizer.DelayedStartRandomizer
+InitializeISARandomizer.EqualRandomizer
+                        InitializeISARandomizer.EqualRandomizer
+InitializeISARandomizer.POCRandomizer
+                        InitializeISARandomizer.POCRandomizer
+InitializeISARandomizer.default
+                        InitializeISARandomizer.default
+InitializePatientList   InitializePatientList
+InitializeTrialRandomizer.default
+                        InitializeTrialRandomizer.default
+MakeDecision            MakeDecision
+MakeDecision.General    MakeDecision.General
+MakeDecision.Outcome1Only
+                        MakeDecision.Outcome1Only
+MakeDecision.Outcome2Only
+                        MakeDecision.Outcome2Only
+MakeDecision.TwoOutcomeOption1
+                        MakeDecision.TwoOutcomeOption1
+MakeDecision.TwoOutcomeOption11
+                        MakeDecision.TwoOutcomeOption11
+MakeDecision.TwoOutcomeOption2
+                        MakeDecision.TwoOutcomeOption2
+MakeDecision.TwoOutcomeOption3
+                        MakeDecision.TwoOutcomeOption3
+MakeDecision.TwoOutcomeOption4
+                        MakeDecision.TwoOutcomeOption4
+MakeDecision.TwoOutcomeOption5
+                        MakeDecision.TwoOutcomeOption5
+MakeDecision.TwoOutcomeOption7
+                        MakeDecision.TwoOutcomeOption7
+MakeDecisionBasedOnCI   MakeDecisionBasedOnCI
+MakeDecisionBasedOnPostProb
+                        MakeDecisionBasedOnPostProbb
+MakeDecisionBasedOnPostProb.MAVOnly
+                        MakeDecisionBasedOnPostProb.MAVOnly
+MakeDecisionBasedOnPostProb.MAVTarget
+                        MakeDecisionBasedOnPostProb.MAVTarget
+MakeDecisionBasedOnPostProb.default
+                        MakeDecisionBasedOnPostProb.default
+MakeDecisionDoses       MakeDecisionDoses
+MakeDecisionDoses.AtLeastOne
+                        MakeDecisionDoses.AtLeastOne
+MakeDecisionDoses.HighDoseOnly
+                        MakeDecisionDoses.HighDoseOnly
+MakeDecisionDoses.MakeDecisionMCPMod
+                        MakeDecisionDoses.MakeDecisionMCPMod
+MakeDecisionDoses.default
+                        MakeDecisionDoses.default
+MakeTrialDecision       MakeTrialDecision
+NewAccrualProcess       NewAccrualProcess
+OCTOPUS                 OCTOPUS
+PlotPlatformRecruitment
+                        PlotPlatformRecruitment
+ProcessData             ProcessData
+ProcessData.ProcessReptMeas
+                        ProcessData.ProcessReptMeas
+ProcessData.ProcessReptMeasChngBaseline
+                        ProcessData.ProcessReptMeasChngBaseline
+ProcessData.ProcessSingleTimeOutcome
+                        ProcessData.ProcessSingleTimeOutcome
+ProcessData.default     ProcessData.default.
+Randomize               Randomize
+RandomizeBetweenISA     RandomizeBetweenISA
+RandomizeBetweenISA.EqualRandomizer
+                        RandomizeBetweenISA.EqualRandomizer
+RandomizeBetweenISA.default
+                        RandomizeBetweenISA.default
+RandomizeWithinISA      RandomizeWithinISA
+ReturnNextTreatment     ReturnNextTreatment
+RunAnalysis             RunAnalysis
+RunAnalysis.AOV         RunAnalysis.AOV
+RunAnalysis.BayesianNormal
+                        RunAnalysis.BayesianNormal
+RunAnalysis.Ranked      RunAnalysis.Ranked
+RunAnalysis.RankedExact
+                        RunAnalysis.RankedExact
+RunAnalysis.ReptMeasAnalysis
+                        RunAnalysis.ReptMeasAnalysis
+RunAnalysis.TTest       RunAnalysis.TTest
+RunAnalysis.default     RunAnalysis.default
+RunExample              RunExample
+RunFinalAnalysis        RunFinalAnalysis
+RunISAAnalysis          RunISAAnalysis
+RunISAAnalysis.DoseRanging
+                        RunISAAnalysis.DoseRanging
+RunISAAnalysis.default
+                        RunISAAnalysis.default
+RunRealTrialAnalysis    RunRealTrialAnalysis
+RunRealTrialAnalysis.default
+                        RunRealTrialAnalysis.default
+RunSimulation           RunSimulation
+RunSimulation.default   RunSimulation.RunSimulation
+RunTrialAnalysis        RunTrialAnalysis
+SelectList              SelectList
+SetRunningEnvironment   SetRunningEnvironment
+SimPatientOutcomes      SimPatientOutcomes
+SimPatientOutcomes.MVN
+                        SimPatientOutcomes.MVN
+SimPatientOutcomes.MVNByGroup
+                        SimPatientOutcomes.MVNByGroup
+SimPatientOutcomes.MVNWithCovariates
+                        SimPatientOutcomes.MVNWithCovariates
+SimulateAccrual         SimulateAccrual
+SimulateAdditionalArrivalTimes
+                        SimulateAdditionalArrivalTimes
+SimulateAllISAStartTimes
+                        Simulate ISA Start Times for all ISAs
+SimulateAllPatientCovariates
+                        SimulateAllPatientCovariates
+SimulateAllPatientOutcomes
+                        SimulateAllPatientOutcomes
+SimulateArrivalTimes    SimulateArrivalTimes
+SimulateISAStartTime    Simulate ISA Start Time
+SimulateISAStartTime.SetTime
+                        SimulateISAStartTime SetTime
+SimulateISAStartTime.Uniform
+                        Simulate ISA Start Time from a uniform
+                        distribution
+SimulateISAStartTime.default
+                        Simulate ISA Start Time
+SimulatePatientCovariates.Categorical
+                        SimulatePatientCovariates.Categorical
+SimulateScenario        SimulateScenario
+SimulateSingleTrial     SimulateSingleTrial
+SubsetData              SubsetData
+SubsetData.AllControls
+                        SubsetData.AllControls
+UpdateRandomizer        UpdateRandomizer
+UpdateRandomizer.Outcome1Only
+                        UpdateRandomizer.Outcome1Only
+UpdateRandomizer.default
+                        UpdateRandomizer.default
+ggPlotPlatformRecruitment
+                        PlotPlatformRecruitment

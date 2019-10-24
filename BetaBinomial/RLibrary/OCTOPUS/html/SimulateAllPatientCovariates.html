@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: SimulateAllPatientCovariates</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for SimulateAllPatientCovariates {OCTOPUS}"><tr><td>SimulateAllPatientCovariates {OCTOPUS}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>SimulateAllPatientCovariates</h2>
+
+<h3>Description</h3>
+
+<p>SimulateAllPatientCovariates This function is used to simulate all patient covariates in the platform.  
+</p>
+<p>SimulateAllPatientCovariates This function is used to simulate all patient covariates in the platform.
+This function is generic in case there is a need to override but
+is implemented such that it should be suitable for most cases.  Specifically,
+this function calls SimulatePatientCovariates for each ISA. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+SimulateAllPatientCovariates(cSimCovariates, cTrialDesign)
+
+## Default S3 method:
+SimulateAllPatientCovariates(cSimCovariates,
+  cTrialDesign)
+</pre>
+
+
+<h3>Value</h3>
+
+<p>A list with length equal to the number of ISAs in the trial.   Each element represents the simulated covariates for each ISA.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>OCTOPUS</em> version 1.3.0.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

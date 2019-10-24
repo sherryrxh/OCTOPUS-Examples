@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: RunTrialAnalysis</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for RunTrialAnalysis {OCTOPUS}"><tr><td>RunTrialAnalysis {OCTOPUS}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>RunTrialAnalysis</h2>
+
+<h3>Description</h3>
+
+<p> RunTrialAnalysis is a generic method to execute the trial level analysis, eg execute all ISA analysis.
+Any implementation of RunTrialAnalysis must increment vISAAnalysisIndx if an analysis is run for an ISA   
+</p>
+<p> RunTrialAnalysis is a generic method to execute the trial analysis.
+Any implementation of RunTrialAnalysis must increment vISAAnalysisIndx if an analysis is run for an ISA.
+Trial level analysis - will go through and conduct the analysis for each ISA.
+This version is sent all the available data in lDataAna then for each ISA gets the subset
+that is specific to that ISA.  If we want to do a version that borrows control info
+a new version could be adapted.
+Because the decision is tied to the analysis, each ISA analysis should contain the elementsnGo, nNoGo, nPause as part ot the list retured.
+
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+RunTrialAnalysis(cISADesigns, cEnrolledPats, vISAStatus, dCurrentTime,
+  vRunISAAnalysis, vISAAnalysisIndx, vIsFinalISAAnalysis, cRandomizer)
+
+## Default S3 method:
+RunTrialAnalysis(cISADesigns, cEnrolledPats, vISAStatus,
+  dCurrentTime, vRunISAAnalysis, vISAAnalysisIndx, vIsFinalISAAnalysis,
+  cRandomizer)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>OCTOPUS</em> version 1.3.0.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

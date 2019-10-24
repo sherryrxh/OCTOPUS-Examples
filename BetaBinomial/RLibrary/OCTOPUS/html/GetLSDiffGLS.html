@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: GetLSDiffGLS</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for GetLSDiffGLS {OCTOPUS}"><tr><td>GetLSDiffGLS {OCTOPUS}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>GetLSDiffGLS</h2>
+
+<h3>Description</h3>
+
+<p>This function will produce the estiamtes comparing to treatment 0 for the LME models that are fit.
+The Z values will match to SAS, which is what is used in decision making.
+This version requires glsFit requires glsFit to be a fit for gls
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+GetLSDiffGLS(glsFit, nTrt, nTime, dMAV, dTV, dLowerCI, dUpperCI,
+  bPlacMinusTrt)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>glsFit:</code></td>
+<td>
+<p>The results of the lme() model fit, required to have the variable TRT and Time</p>
+</td></tr>
+<tr valign="top"><td><code>nTrt:</code></td>
+<td>
+<p>Integer value for the Treatment to compare to 0 (placebo)</p>
+</td></tr>
+<tr valign="top"><td><code>nTime:</code></td>
+<td>
+<p>Integer value for the time variable that should be use.  For example 24, for 24</p>
+</td></tr>
+</table>
+
+<hr /><div style="text-align: center;">[Package <em>OCTOPUS</em> version 1.3.0.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

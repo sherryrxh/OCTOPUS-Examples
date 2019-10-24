@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="J. Kyle Wathen" />
+
+<meta name="date" content="2019-10-02" />
+
+<title>Case Study 6</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Case Study 6</h1>
+<h4 class="author">J. Kyle Wathen</h4>
+<h4 class="date">2019-10-02</h4>
+
+
+
+<p>This case study (CS) builds on <a href="https://kwathen.github.io/OCTOPUS/articles/CaseStudy5.html">Case Study 5</a> by adding interim analysis. Currently, this package offers two options for determining when interim analysis are conducted.</p>
+<p>The R code may be found in the Examples/CaseStudy6. The main differences are found in the TrialDesign.R file.</p>
+<div id="interim-analysis-options-ia" class="section level2">
+<h2>Interim Analysis Options (IA)</h2>
+<p>Typically, a minimum amount of information is needed within an ISA before any analysis is conducted or decisions made about an intervention. To provide flexibility in when the IAs are conducted the following options are currently available.</p>
+<div id="interim-analysis-option-1" class="section level3">
+<h3>Interim Analysis Option 1</h3>
+<p>Each ISA specifies a number of patients and the amount of follow-up desired for an IA. For example, an ISA with 200 patients could have one IA when 100 of the patients have 12 weeks of data observed. If additional IA are desired more can be specified in the same fashion, a number of patients with a specified FU. For example, ISA 1 could have IA 1 when 100 patients have 12 weeks of data observed, IA 2 when 150 patients have 12 weeks of data and the final analysis when all 200 patients have 12 weeks of FU. This option allows you to add a pre-specified number of IAs.</p>
+</div>
+<div id="interim-analysis-option-2" class="section level3">
+<h3>Interim Analysis Option 2</h3>
+<p>Each ISA specifies when to start IAs as a minimum number of patient with specific FU and the IAs occur based on a time frequency until the Final Analysis (FA) define by number of patients with FU. Each ISA can specify a different rule Example: IA to start when 30 patients with 24 weeks FU; once a month thereafter until 90 patients have 24 weeks FU. This option allows you specify the frequency of IAs.</p>
+</div>
+</div>
+<div id="assumptions" class="section level2">
+<h2>Assumptions</h2>
+<div id="trial-design-elements" class="section level3">
+<h3>Trial Design Elements</h3>
+<ul>
+<li>Platform trial with 2 ISAs</li>
+<li>Interim Analysis to start when 30 patients have 24 weeks of data and monthly thereafter.<br />
+</li>
+<li>Final Analysis to occur for each ISA when 90 patients have 24 weeks of data</li>
+<li>Final Analysis (FA) when all patients have the outcome observed.</li>
+<li>30 patients on control (C) 60 patients on treatment (T) in ISA 1</li>
+<li>30 patient on control (C), 20 patients on Low Dose (arm 2) and 60 on high dose (arm 3) for ISA 2</li>
+<li>Primary outcome is repeated measure evaluated at baseline, 4, 8, 12, 16, 20 and 24 weeks after treatment</li>
+<li>Analyze difference from baseline to week 24 compared to control using a Bayesian AR(1) model.</li>
+<li>Minimum Acceptable Value MAV = 0.5 difference between control and treatment
+<ul>
+<li>This is the minimum difference between treatment and control <span class="math display">\[ ( \mu_{24} - \mu_0 )_{C} – (\mu_{24} - m_0 )_{T}\]</span></li>
+</ul></li>
+<li>Decision Rules
+<ul>
+<li>Define <span class="math inline">\(\delta_C = ( \mu_{24} - \mu_0 )_{C}\)</span> and <span class="math inline">\(\delta_T = (\mu_{24} - m_0 )_{T}\)</span></li>
+<li>If <span class="math inline">\(\rho = Pr( \delta_C - \delta_T\)</span> &gt; MAV | data ) <span class="math inline">\(&gt; P_U = 0.8\)</span> then make a “Go” decision</li>
+<li>If Pr( <span class="math inline">\(\delta_C - \delta_T\)</span> &gt; MAV | data ) <span class="math inline">\(&lt; P_L = 0.1\)</span> then make a “No Go” decision</li>
+<li>Otherwise the decision is indeterminate</li>
+</ul></li>
+</ul>
+<p>If the goal at the end of the study is to make a decision of Go or No Go, then <span class="math inline">\(P_U = P_L\)</span>.</p>
+<p>In the context of this case study, patient outcomes are not expected to change over the 24 weeks for the control treatment, where as the treatment is expected to decrease the values of the patient outcomes. Thus, <span class="math inline">\(\delta_C - \delta_T\)</span> is expected to be greater than 0 for effective treatments and consequently, high values for <span class="math inline">\(\rho\)</span> indicate an effective treatment.</p>
+<p>The function SetupTrialDesign() is located in <a href="https://github.com/kwathen/OCTOPUS/blob/master/inst/Examples/CaseStudy6/TrialDesign.R">TrialDesign.R</a> and the function is called to build the trial object from the BuildMe.R file in this example.</p>
+</div>
+<div id="simulation-design-elements" class="section level3">
+<h3>Simulation Design Elements</h3>
+<p>The simulation object contains all information to specify how the trial is simulated. Specifically, it contains a list of scenarios, such as the null and alternative, details about patient accrual rates and in a multiple ISA setting information about how and when the second and subsequent ISAs are added to the trial.</p>
+<p>For case study 6, the data for each patient is simulated from a multi-variate normal with a binary covariate. The patient covariate is specified as a responder or non-responder and the outcome value over time is simulated from a MVN with a separate mean vector specified for responders and non-responders. Based on the historical data we have the following means for responders and non-responders shown below is used to specify various scenarios in the simulation study, more detail provided below.</p>
+<div id="table-1---true-means" class="section level4">
+<h4>Table 1 - True Means</h4>
+<table>
+<caption>True Means</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">Baseline</th>
+<th align="right">Week 4</th>
+<th align="right">Week 8</th>
+<th align="right">Week 12</th>
+<th align="right">Week 16</th>
+<th align="right">Week 20</th>
+<th align="right">Week 24</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Non-responders</td>
+<td align="right">3.5</td>
+<td align="right">3.5</td>
+<td align="right">3.5</td>
+<td align="right">3.5</td>
+<td align="right">3.5</td>
+<td align="right">3.5</td>
+<td align="right">3.5</td>
+</tr>
+<tr class="even">
+<td>Responders</td>
+<td align="right">3.5</td>
+<td align="right">3.4</td>
+<td align="right">3.0</td>
+<td align="right">2.5</td>
+<td align="right">2.9</td>
+<td align="right">1.4</td>
+<td align="right">0.9</td>
+</tr>
+</tbody>
+</table>
+<p>In addition, the estimates of the variance/covariance over time is</p>
+</div>
+<div id="table-2---variancecovariance-matrix" class="section level4">
+<h4>Table 2 - Variance/Covariance Matrix</h4>
+<p><span class="math display">\[V = \begin{bmatrix}0.5&amp;0.4&amp;0.4&amp;0.4&amp;0.4&amp;0.4&amp;0.4 \\0.4&amp;0.5&amp;0.4&amp;0.4&amp;0.4&amp;0.4&amp;0.4 \\0.4&amp;0.4&amp;0.5&amp;0.4&amp;0.4&amp;0.4&amp;0.4 \\0.4&amp;0.4&amp;0.4&amp;0.5&amp;0.4&amp;0.4&amp;0.4 \\0.4&amp;0.4&amp;0.4&amp;0.4&amp;0.5&amp;0.4&amp;0.4 \\0.4&amp;0.4&amp;0.4&amp;0.4&amp;0.4&amp;0.5&amp;0.4 \\0.4&amp;0.4&amp;0.4&amp;0.4&amp;0.4&amp;0.4&amp;0.5 \\\end{bmatrix}\]</span></p>
+<p>In general, the responders and non-responders could have different var-cov matrix but for simplicity in this case study they are assumed to be the same.</p>
+<p>The trial recruitment is specified in terms of the number of patients accrued per month per site (patients/month/site) and the number of sites open in the platform. For simplicity, the ramp-up in the number of patients/month/site is not applied within a site and recruitment to the platform assumes a Poisson process with the rate equal to the number of patients/month/site * number of sites open.</p>
+<p>To specify the scenarios, each treatment specifies a percent of patients that are responders and non-responders. For the control treatment, the percent of responders is 2% in all scenarios. The treatment are varies the percent of responders from 2% (the null case) to 40%.</p>
+<p>During the simulation of a virtual trials, a patient is first simulated as a responder or non-responder and then their observed values over time from the corresponding MVN. In this case study, an effective treatment is expected to move patients from the non-responder category to the responder category.</p>
+<p>The function SetupSimulations() is located in <a href="https://github.com/kwathen/OCTOPUS/blob/master/inst/Examples/CaseStudy6/SimulationDesign.R">SimulationDesign.R</a> and the function is called to build the simulation object for the BuildMe.R file in this example.</p>
+</div>
+</div>
+</div>
+<div id="r-code" class="section level2">
+<h2>R Code</h2>
+<p>For this case study, the new additions are located in the TrialDesign.R file. Below is an example of how to specify each option above.</p>
+<p>Previous code example with NO interim Analysis.</p>
+<div class="sourceCode" id="numCode"><pre class="sourceCode numberSource R numberLines"><code class="sourceCode r"><span id="numCode-1"><a href="#numCode-1"></a></span>
+<span id="numCode-2"><a href="#numCode-2"></a>    vQtyPats         &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="dv">30</span>, <span class="dv">60</span> )  <span class="co"># Control, Treatment</span></span>
+<span id="numCode-3"><a href="#numCode-3"></a>    vMinQtyPats      &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="dv">30</span>, <span class="dv">90</span> )</span>
+<span id="numCode-4"><a href="#numCode-4"></a>    vMinFUTime       &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="dv">24</span><span class="op">*</span><span class="st"> </span>dConvWeeksToMonths, <span class="dv">24</span><span class="op">*</span><span class="st"> </span>dConvWeeksToMonths)</span>
+<span id="numCode-5"><a href="#numCode-5"></a>    dQtyMonthsBtwIA  &lt;-<span class="st"> </span><span class="fl">0.0</span></span>
+<span id="numCode-6"><a href="#numCode-6"></a>    </span></code></pre></div>
+<p><strong>Interim Analysis Option 1</strong> - Example code start the interim analysis when the minimum of 30 patients have been enrolled and followed for 24 week. The vectors vMinQtyPats and vMinFUTime have corresponding element to define when the IAs occur. The example below ill have one IA when 30 patients have 24 weeks of FU and the FA when 90 patients have 24 weeks of FU.</p>
+<div class="sourceCode" id="numCode"><pre class="sourceCode numberSource R numberLines"><code class="sourceCode r"><span id="numCode-1"><a href="#numCode-1"></a></span>
+<span id="numCode-2"><a href="#numCode-2"></a>    vQtyPats         &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="dv">30</span>, <span class="dv">60</span> )  <span class="co"># Control, Treatment</span></span>
+<span id="numCode-3"><a href="#numCode-3"></a>    vMinQtyPats      &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="dv">30</span>, <span class="dv">90</span> )</span>
+<span id="numCode-4"><a href="#numCode-4"></a>    vMinFUTime       &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="dv">24</span><span class="op">*</span><span class="st"> </span>dConvWeeksToMonths, <span class="dv">24</span><span class="op">*</span><span class="st"> </span>dConvWeeksToMonths)</span>
+<span id="numCode-5"><a href="#numCode-5"></a>    dQtyMonthsBtwIA  &lt;-<span class="st"> </span><span class="fl">0.0</span></span>
+<span id="numCode-6"><a href="#numCode-6"></a>    </span></code></pre></div>
+<p><strong>Interim Analysis Option 1</strong> - Additional IAs added. This option would have 3 IAs and 1 FU. The IAs would be when 30 patients have enrolled with 12 weeks of FU, 45 patients with 24 weeks FU, 75 patients with 24 weeks and the FA when 90 patients with 24 weeks FU.</p>
+<div class="sourceCode" id="numCode"><pre class="sourceCode numberSource R numberLines"><code class="sourceCode r"><span id="numCode-1"><a href="#numCode-1"></a></span>
+<span id="numCode-2"><a href="#numCode-2"></a>    vQtyPats         &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="dv">30</span>, <span class="dv">60</span> )  <span class="co"># Control, Treatment</span></span>
+<span id="numCode-3"><a href="#numCode-3"></a>    vMinQtyPats      &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="dv">30</span>, <span class="dv">45</span>, <span class="dv">75</span>, <span class="dv">90</span> )</span>
+<span id="numCode-4"><a href="#numCode-4"></a>    vMinFUTime       &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="dv">12</span><span class="op">*</span><span class="st"> </span>dConvWeeksToMonths, <span class="dv">24</span><span class="op">*</span><span class="st"> </span>dConvWeeksToMonths, <span class="dv">24</span><span class="op">*</span><span class="st"> </span>dConvWeeksToMonths, <span class="dv">24</span><span class="op">*</span><span class="st"> </span>dConvWeeksToMonths)</span>
+<span id="numCode-5"><a href="#numCode-5"></a>    dQtyMonthsBtwIA  &lt;-<span class="st"> </span><span class="fl">0.0</span></span>
+<span id="numCode-6"><a href="#numCode-6"></a>    </span></code></pre></div>
+<p><strong>Interim Analysis Option 2</strong> - This option allows you to set when the IAs start a frequency (in months) and when the FA occurs. In this example the first IA is conducted when 30 patients have 12 weeks of FU, after the first IA additional IAs are conducted every 2 months. The time between when the IAs start and the next one is conducted is determined by the variable dQtyMonthsBtwIA. The FA is conducted when 90 patients had 24 weeks of FU.</p>
+<div class="sourceCode" id="numCode"><pre class="sourceCode numberSource R numberLines"><code class="sourceCode r"><span id="numCode-1"><a href="#numCode-1"></a></span>
+<span id="numCode-2"><a href="#numCode-2"></a>    vQtyPats         &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="dv">30</span>, <span class="dv">60</span> )  <span class="co"># Control, Treatment</span></span>
+<span id="numCode-3"><a href="#numCode-3"></a>    vMinQtyPats      &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="dv">30</span>, <span class="dv">90</span> )</span>
+<span id="numCode-4"><a href="#numCode-4"></a>    vMinFUTime       &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="dv">12</span><span class="op">*</span><span class="st"> </span>dConvWeeksToMonths, <span class="dv">24</span><span class="op">*</span><span class="st"> </span>dConvWeeksToMonths)</span>
+<span id="numCode-5"><a href="#numCode-5"></a>    dQtyMonthsBtwIA  &lt;-<span class="st"> </span><span class="fl">2.0</span></span>
+<span id="numCode-6"><a href="#numCode-6"></a>    </span></code></pre></div>
+</div>
+<div id="borrowing-control-patients" class="section level2">
+<h2>Borrowing Control Patients</h2>
+<p>For borrowing of control patients please see <a href="https://kwathen.github.io/OCTOPUS/articles/CaseStudy4.html">Case Study 4</a>.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

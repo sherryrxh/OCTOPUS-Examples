@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: SimPatientOutcomes</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for SimPatientOutcomes {OCTOPUS}"><tr><td>SimPatientOutcomes {OCTOPUS}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>SimPatientOutcomes</h2>
+
+<h3>Description</h3>
+
+<p>SimPatientOutcomes This function is intended to simulate the outcomes for a given ISA.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+SimPatientOutcomes(cSimOutcomes, cISADesign, dfPatCovISA)
+
+## Default S3 method:
+SimPatientOutcomes(cSimOutcomes, cISADesign, dfPatCovISA)
+
+## S3 method for class 'Independent'
+SimPatientOutcomes(cSimOutcomes, cISADesign,
+  dfPatCovISA)
+
+## S3 method for class 'Correlated'
+SimPatientOutcomes(cSimOutcomes, cISADesign,
+  dfPatCovISA)
+</pre>
+
+
+<h3>Methods (by class)</h3>
+
+
+<ul>
+<li> <p><code>default</code>:  This function is intended to simulate the outcomes for a given ISA.
+Because several options are provided and there in no well defined default
+an stop error occurs if you call the default method. 
+</p>
+</li>
+<li> <p><code>Independent</code>:  The cSimOutcomes object has a list of sim outcomes and this version will go through and call the
+SimPatientOutcomes for each type.  Each outcome is simulated independently. 
+</p>
+</li>
+<li> <p><code>Correlated</code>:  The cSimOutcomes object has a list of sim outcomes and this version will utilize the
+first outcome to simulate all outcomes correlated.  Each simoutcome must have an attribute vColIndex that
+specifies which columns out of the matrix will be used for that outcome. 
+</p>
+</li></ul>
+
+<hr /><div style="text-align: center;">[Package <em>OCTOPUS</em> version 1.3.0.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: SimulatePatientCovariates.Categorical</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for SimulatePatientCovariates.Categorical {OCTOPUS}"><tr><td>SimulatePatientCovariates.Categorical {OCTOPUS}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>SimulatePatientCovariates.Categorical</h2>
+
+<h3>Description</h3>
+
+<p>SimulatePatientCovariates This function is used to simulate the patient covariate values.
+This function is intended to do one covariate for all patients.  
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'Categorical'
+SimulatePatientCovariates(cSimCovariate,
+  nQtyOfPatients)
+
+SimulatePatientCovariates(cSimCovariate, nQtyOfPatients)
+
+## Default S3 method:
+SimulatePatientCovariates(cSimCovariate, nQtyOfPatients)
+</pre>
+
+
+<h3>Methods (by class)</h3>
+
+
+<ul>
+<li> <p><code>Categorical</code>:  This function is used to simulate the patient covariate values.
+This function is intended to do one covariate, for all patients.  The sampled covaraites values will be 1,2,..., length( cSimCovariate$vProbs ).
+</p>
+</li>
+<li> <p><code>default</code>:  This function is used to simulate the patient covariate values.
+This function is intended to do one covariate, for all patients.
+Because several options are provided and there in no well defined default
+an stop error occurs if you call the default method. 
+</p>
+</li></ul>
+
+<hr /><div style="text-align: center;">[Package <em>OCTOPUS</em> version 1.3.0.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

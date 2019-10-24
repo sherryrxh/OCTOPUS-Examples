@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Randomize</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for Randomize {OCTOPUS}"><tr><td>Randomize {OCTOPUS}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Randomize</h2>
+
+<h3>Description</h3>
+
+<p> Randomize should return a list with at least the following items
+nTrt - The treatment within the ISA that the patient should receive
+nISA - The index of the ISA
+cISARand - the same is cISARand but if it is updates this allows the caller to get the update.
+For a platform trial the randomization is a two step process.  The two steps are as follows:
+1.  First  randomize between the ISAs.
+To do this RandomizeBetweenISA is called and the class( cRandomizer ) will determine which version of this function
+is called.  For example, if class( cRandomzier ) = &quot;Equal&quot; see RandomizeBetweenISA.Equal() for that definition.
+Each ISA RandomzieBetweenISA function will return an integer nISA to indicate which ISA the patient was randomized to.
+2.  Randomize within the ISA.
+To do this RandomizeWithinISA will be called and the class( cRandomzier[[ nISA ]] ) which specific randomizer is called.
+
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+Randomize(cRandomizer, vISAStatus, dCurrentTime, dfCov, nPrintDetail)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>OCTOPUS</em> version 1.3.0.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

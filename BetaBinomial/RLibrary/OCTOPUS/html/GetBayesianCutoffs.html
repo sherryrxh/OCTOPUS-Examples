@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: GetBayesianCutoffs</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for GetBayesianCutoffs {OCTOPUS}"><tr><td>GetBayesianCutoffs {OCTOPUS}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>GetBayesianCutoffs</h2>
+
+<h3>Description</h3>
+
+<p> Used in a trial with a Bayesian analysis and parameter of interest <i>&theta;</i>, where
+the decisions are based two posterior probabilities Pr( <i>&theta;</i> &gt; MAV |data ) &gt; vMAVCutoff
+and Pr( <i>&theta;</i> &gt; TV | data ) &gt; vTVCutoff.
+This function returns a list with dMAVCutoff and dTVCutoff.  0 &lt;= dMAVCutoff and dTVCutoff &lt;= 1.
+Typically, this function is not called directly but as part of the ComputePosteriorProb function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+GetBayesianCutoffs(cAnalysis, nISAAnalysisIndx, bIsFinalISAAnalysis)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>OCTOPUS</em> version 1.3.0.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

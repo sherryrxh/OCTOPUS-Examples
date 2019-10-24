@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: CreateDataSetForAnalysis.default</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for CreateDataSetForAnalysis.default {OCTOPUS}"><tr><td>CreateDataSetForAnalysis.default {OCTOPUS}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>CreateDataSetForAnalysis.default</h2>
+
+<h3>Description</h3>
+
+<p>This function creates a dataset for analysis based on the current time (dCurrentTime)
+and returns an object with class = &quot;TrialData&quot; that has a list with an element for each ISA data.
+Before creating the dataset the ProcessData to create the version of the data needed, eg change from baseline,
+and also coppies covariates that are present.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## Default S3 method:
+CreateDataSetForAnalysis(cPats, dCurrentTime, vISAStatus)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>cPats</code></td>
+<td>
+<p>The object of patient data to create the data for analysis from.</p>
+</td></tr>
+<tr valign="top"><td><code>dCurrentTime</code></td>
+<td>
+<p>The current time in the trial.   In each simulated trial this will be the time at which
+the analysis is created.</p>
+</td></tr>
+<tr valign="top"><td><code>vISAStatus</code></td>
+<td>
+<p>A vector with one element for each ISA.  If the status of the ISA != 0 then a dataset
+is created, if the status = 0 for an ISA the dataset will not be created.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>An object with class = &quot;TrialData&quot; that has a list with an element for each ISA data.
+Before creating the dataset the ProcessData to create the version of the data needed, eg change from baseline,
+and also coppies covariates that are present.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>OCTOPUS</em> version 1.3.0.4 <a href="00Index.html">Index</a>]</div>
+</body></html>
