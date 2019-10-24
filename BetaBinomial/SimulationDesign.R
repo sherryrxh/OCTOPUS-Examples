@@ -24,7 +24,7 @@ SetupSimulations <- function( cTrialDesign, nQtyReps  )
     vObsTime1    <- cTrialDesign$cISADesigns$cISA1$cISAAnalysis$vAnalysis[[1]]$vObsTime
 
 
-    cSimOutcome1 <- structure(list( vProbResponse = c(0.2, 0.6 )), class=c("Binary"))
+    cSimOutcome1 <- structure(list( vProbResponse = c(0.2, 0.2 )), class=c("Binary"))
 
 
     cISA1Info <- structure( list(cSimOutcomes = cSimOutcome1,
@@ -45,7 +45,7 @@ SetupSimulations <- function( cTrialDesign, nQtyReps  )
     vObsTime1    <- cTrialDesign$cISADesigns$cISA2$cISAAnalysis$vAnalysis[[1]]$vObsTime
 
 
-    cSimOutcome1 <- structure(list( vProbResponse = c(0.2, 0.6 ) ), class=c("Binary"))
+    cSimOutcome1 <- structure(list( vProbResponse = c(0.2, 0.2 ) ), class=c("Binary"))
 
 
     cISA2Info <- structure( list(cSimOutcomes = cSimOutcome1,
@@ -65,7 +65,7 @@ SetupSimulations <- function( cTrialDesign, nQtyReps  )
     vObsTime1    <- cTrialDesign$cISADesigns$cISA2$cISAAnalysis$vAnalysis[[1]]$vObsTime
     
     
-    cSimOutcome1 <- structure(list( vProbResponse = c(0.2, 0.6 ) ), class=c("Binary"))
+    cSimOutcome1 <- structure(list( vProbResponse = c(0.2, 0.2 ) ), class=c("Binary"))
     
     
     cISA3Info <- structure( list(cSimOutcomes = cSimOutcome1,
@@ -139,9 +139,9 @@ SetupSimulations <- function( cTrialDesign, nQtyReps  )
 
     #Scenario 3
     cScen          <- cScen1
-    cScen$cISADesigns$cISA1$cSimOutcomes$vProbResponse <- c( 0.2, 0.4 )
-    cScen$cISADesigns$cISA2$cSimOutcomes$vProbResponse <- c( 0.2, 0.4 )
-    cScen$cISADesigns$cISA3$cSimOutcomes$vProbResponse <- c( 0.2, 0.4 )
+    cScen$cISADesigns$cISA1$cSimOutcomes$vProbResponse <- c( 0.2, 0.35 )
+    cScen$cISADesigns$cISA2$cSimOutcomes$vProbResponse <- c( 0.2, 0.35 )
+    cScen$cISADesigns$cISA3$cSimOutcomes$vProbResponse <- c( 0.2, 0.35 )
     cScen$Scen     <- 3
     lScen[[ 3 ]]   <- cScen
     vName          <- c( vName, "cScen3" )
@@ -151,9 +151,9 @@ SetupSimulations <- function( cTrialDesign, nQtyReps  )
     
     #Scenario 4
     cScen          <- cScen1
-    cScen$cISADesigns$cISA1$cSimOutcomes$vProbResponse <- c( 0.2, 0.5 )
-    cScen$cISADesigns$cISA2$cSimOutcomes$vProbResponse <- c( 0.2, 0.5 )
-    cScen$cISADesigns$cISA3$cSimOutcomes$vProbResponse <- c( 0.2, 0.5 )
+    cScen$cISADesigns$cISA1$cSimOutcomes$vProbResponse <- c( 0.2, 0.4 )
+    cScen$cISADesigns$cISA2$cSimOutcomes$vProbResponse <- c( 0.2, 0.4 )
+    cScen$cISADesigns$cISA3$cSimOutcomes$vProbResponse <- c( 0.2, 0.4 )
     cScen$Scen     <- 4
     lScen[[ 4]]   <- cScen
     vName          <- c( vName, "cScen4" )
@@ -162,12 +162,24 @@ SetupSimulations <- function( cTrialDesign, nQtyReps  )
     
     #Scenario 5
     cScen          <- cScen1
-    cScen$cISADesigns$cISA1$cSimOutcomes$vProbResponse <- c( 0.2, 0.6 )
-    cScen$cISADesigns$cISA2$cSimOutcomes$vProbResponse <- c( 0.2, 0.6 )
-    cScen$cISADesigns$cISA3$cSimOutcomes$vProbResponse <- c( 0.2, 0.6 )
+    cScen$cISADesigns$cISA1$cSimOutcomes$vProbResponse <- c( 0.2, 0.45 )
+    cScen$cISADesigns$cISA2$cSimOutcomes$vProbResponse <- c( 0.2, 0.45 )
+    cScen$cISADesigns$cISA3$cSimOutcomes$vProbResponse <- c( 0.2, 0.45 )
     cScen$Scen     <- 5
     lScen[[ 5]]   <- cScen
     vName          <- c( vName, "cScen5" )
+    names( lScen ) <- vName
+    
+    
+    
+    #Scenario 6
+    cScen          <- cScen1
+    cScen$cISADesigns$cISA1$cSimOutcomes$vProbResponse <- c( 0.2, 0.5 )
+    cScen$cISADesigns$cISA2$cSimOutcomes$vProbResponse <- c( 0.2, 0.5 )
+    cScen$cISADesigns$cISA3$cSimOutcomes$vProbResponse <- c( 0.2, 0.5 )
+    cScen$Scen     <- 6
+    lScen[[ 6]]   <- cScen
+    vName          <- c( vName, "cScen6" )
     names( lScen ) <- vName
 
     # It would be useful to run more scenarios where the effectiveness of the treatment is not

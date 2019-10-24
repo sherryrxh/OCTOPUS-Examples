@@ -55,11 +55,13 @@ RunSimulation( cSimulation )
 # then creating an R markdown document 
 
 # Due to a bug in the BuildSimulationResultsDataSet( ) we need to run at lease nSGETask = 2
-vSGETasks <- 2:100  # This will give us 500 reps (50 * 5)
-for ( nSGETask in vSGETasks )
+vSGETasks <- 2:200  # This will give us 500 reps (50 * 5)
+
+gDebug <- FALSE
+for ( i in 1:length( vSGETasks ) )
 {
-    gDebug <- FALSE
+    nSGETask <- vSGETasks[ i ]
     Sys.setenv(SGE_TASK_ID= nSGETask )
-    print( paste( "Simulating task ", nSGETask, " of ", length( vSGETasks ), "..."))
+    print( paste( "Simulating task ", i, " of ", length( vSGETasks ), "..."))
     RunSimulation( cSimulation )
 }
