@@ -24,7 +24,7 @@ SetupSimulations <- function( cTrialDesign, nQtyReps  )
     vObsTime1    <- cTrialDesign$cISADesigns$cISA1$cISAAnalysis$vAnalysis[[1]]$vObsTime
 
 
-    cSimOutcome1 <- structure(list( vProbResponse = c(0.2, 0.2 )), class=c("Binary"))
+    cSimOutcome1 <- structure(list( vProbResponse = c(0.2, 0.6 )), class=c("Binary"))
 
 
     cISA1Info <- structure( list(cSimOutcomes = cSimOutcome1,
@@ -45,7 +45,7 @@ SetupSimulations <- function( cTrialDesign, nQtyReps  )
     vObsTime1    <- cTrialDesign$cISADesigns$cISA2$cISAAnalysis$vAnalysis[[1]]$vObsTime
 
 
-    cSimOutcome1 <- structure(list( vProbResponse = c(0.2, 0.2 ) ), class=c("Binary"))
+    cSimOutcome1 <- structure(list( vProbResponse = c(0.2, 0.6 ) ), class=c("Binary"))
 
 
     cISA2Info <- structure( list(cSimOutcomes = cSimOutcome1,
@@ -65,7 +65,7 @@ SetupSimulations <- function( cTrialDesign, nQtyReps  )
     vObsTime1    <- cTrialDesign$cISADesigns$cISA2$cISAAnalysis$vAnalysis[[1]]$vObsTime
     
     
-    cSimOutcome1 <- structure(list( vProbResponse = c(0.2, 0.2 ) ), class=c("Binary"))
+    cSimOutcome1 <- structure(list( vProbResponse = c(0.2, 0.6 ) ), class=c("Binary"))
     
     
     cISA3Info <- structure( list(cSimOutcomes = cSimOutcome1,

@@ -50,7 +50,7 @@ RunAnalysis.BetaBinomial <- function( cAnalysis, lDataAna,  nISAAnalysisIndx, bI
     
     # Posterior B = Prior B + Number of non-responders in ISA + Weight * Number of non-responders NOT in ISA
     dPostBCtrl   <- dPostBCtrl +  ( nNCtrlInISA - nQtyRespCtrlInISA ) 
-    dPostBCtrl   <- dPostBCtrl + dWeightPatientsOutsideISA * ( nQtyRespCtrlNotInISA - nQtyRespCtrlNotInISA )     
+    dPostBCtrl   <- dPostBCtrl + dWeightPatientsOutsideISA * ( nNCtrlNotInISA - nQtyRespCtrlNotInISA )     
    
      
     # Compute Posterior Paramters - Treatment ##### 
@@ -85,6 +85,10 @@ RunAnalysis.BetaBinomial <- function( cAnalysis, lDataAna,  nISAAnalysisIndx, bI
     
     lRet       <- MakeDecisionBasedOnPostProb(cAnalysis, lCalcs )
    
+    lRet$dPostACtrl <- dPostACtrl
+    lRet$dPostBCtrl <- dPostBCtrl
+    lRet$dPostATrt  <- dPostATrt
+    lRet$dPostBTrt  <- dPostBTrt
     lRet$cRandomizer <- cRandomizer  # Needed because the main code will pull the randomzier off just incase this function were to close a covariate group
     return( lRet )
     
