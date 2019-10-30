@@ -55,7 +55,7 @@ RunSimulation( cSimulation )
 # then creating an R markdown document 
 
 # Due to a bug in the BuildSimulationResultsDataSet( ) we need to run at lease nSGETask = 2
-vSGETasks <- 2:200  # This will give us 500 reps (50 * 5)
+vSGETasks <- 51:1000  # This will give us 5000 reps (1000 * 5)
 
 gDebug <- FALSE
 for ( i in 1:length( vSGETasks ) )
@@ -65,3 +65,5 @@ for ( i in 1:length( vSGETasks ) )
     print( paste( "Simulating task ", i, " of ", length( vSGETasks ), "..."))
     RunSimulation( cSimulation )
 }
+
+

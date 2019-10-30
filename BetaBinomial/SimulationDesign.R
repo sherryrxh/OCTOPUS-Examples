@@ -1,6 +1,9 @@
 ##### File Description ######################################################################################################
 #  Setup the simulation object. 
-#
+# Scen 1-3 simulate the cases when or three ISAs have identical responses(1=null case, 2=MAV; 3=TV)
+# Scen 4-6 simulate the cases when or ISA1 has higher response rate (+0.1) than others(4=null case, 5=MAV; 6=TV), this case would decrease power if full borrow
+# Scen 7-9 simulate the cases when or ISA1 has lower response rate (-0.1) than others(7=null case, 8=MAV; 9=TV), this case would inflate alpha if full borrow
+# 
 #############################################################################################################################.
 
 SetupSimulations <- function( cTrialDesign, nQtyReps  )
@@ -24,7 +27,7 @@ SetupSimulations <- function( cTrialDesign, nQtyReps  )
     vObsTime1    <- cTrialDesign$cISADesigns$cISA1$cISAAnalysis$vAnalysis[[1]]$vObsTime
 
 
-    cSimOutcome1 <- structure(list( vProbResponse = c(0.2, 0.2 )), class=c("Binary"))
+    cSimOutcome1 <- structure(list( vProbResponse = c(0.3, 0.3 )), class=c("Binary"))
 
 
     cISA1Info <- structure( list(cSimOutcomes = cSimOutcome1,
@@ -38,14 +41,14 @@ SetupSimulations <- function( cTrialDesign, nQtyReps  )
     # See ?SimulateISAStartTime.SetTime or ?SimulateISAStartTime.Uniform
     ##################################################################################.
 
-    # ISA 2 enters the platform at a random time between month 3 and 6.
-    cISAStart2   <- structure( list( dParam1=3, dParam2=6), class="Uniform" )
+    # ISA 2 enters the platform at a random time between month 5 and 7.
+    cISAStart2   <- structure( list( dParam1=11, dParam2=13), class="Uniform" )
 
 
     vObsTime1    <- cTrialDesign$cISADesigns$cISA2$cISAAnalysis$vAnalysis[[1]]$vObsTime
 
 
-    cSimOutcome1 <- structure(list( vProbResponse = c(0.2, 0.2 ) ), class=c("Binary"))
+    cSimOutcome1 <- structure(list( vProbResponse = c(0.3, 0.3 ) ), class=c("Binary"))
 
 
     cISA2Info <- structure( list(cSimOutcomes = cSimOutcome1,
@@ -59,13 +62,13 @@ SetupSimulations <- function( cTrialDesign, nQtyReps  )
     ##################################################################################.
     
     # ISA 3 enters the platform at a random time between month 12 and 18.
-    cISAStart3   <- structure( list( dParam1=12, dParam2=18), class="Uniform" )
+    cISAStart3   <- structure( list( dParam1=14, dParam2=16), class="Uniform" )
     
     
     vObsTime1    <- cTrialDesign$cISADesigns$cISA2$cISAAnalysis$vAnalysis[[1]]$vObsTime
     
     
-    cSimOutcome1 <- structure(list( vProbResponse = c(0.2, 0.2 ) ), class=c("Binary"))
+    cSimOutcome1 <- structure(list( vProbResponse = c(0.3, 0.3 ) ), class=c("Binary"))
     
     
     cISA3Info <- structure( list(cSimOutcomes = cSimOutcome1,
@@ -105,8 +108,8 @@ SetupSimulations <- function( cTrialDesign, nQtyReps  )
     ##########################################################################################.
     # The infomraiton provided is in terms of the number of patients per month per site and
     #
-    vPatsPerMonthPerSite1   <- c(0.1, 0.3, 0.45, 0.5, 0.5, 0.5 )
-    vQtyOfSitesPlat         <- c(3,     8,  15,   35,  50, 70)
+    vPatsPerMonthPerSite1   <- c(0.1,  0.3, 0.45, 0.5, 0.5, 0.5 )
+    vQtyOfSitesPlat         <- c(3,   8,  15,   35,  50, 70)
     vQtyOfPatsPerMonth1     <- vPatsPerMonthPerSite1 * vQtyOfSitesPlat
 
     ap                      <- NewAccrualProcess( vQtyPatsPerMonth = vQtyOfPatsPerMonth1, nMaxQtyPatients = nMaxQtyPats )
@@ -129,9 +132,9 @@ SetupSimulations <- function( cTrialDesign, nQtyReps  )
     cScen          <- cScen1
 
     #In the next two lines we are changing the $ responders for the treatment arm in BOTH ISA 1 and ISA 2
-    cScen$cISADesigns$cISA1$cSimOutcomes$vProbResponse <- c( 0.2, 0.3 )
-    cScen$cISADesigns$cISA2$cSimOutcomes$vProbResponse <- c( 0.2, 0.3 )
-    cScen$cISADesigns$cISA3$cSimOutcomes$vProbResponse <- c( 0.2, 0.3 )
+    cScen$cISADesigns$cISA1$cSimOutcomes$vProbResponse <- c( 0.3, 0.4 )
+    cScen$cISADesigns$cISA2$cSimOutcomes$vProbResponse <- c( 0.3, 0.4 )
+    cScen$cISADesigns$cISA3$cSimOutcomes$vProbResponse <- c( 0.3, 0.4 )
     cScen$Scen     <- 2
     lScen[[ 2 ]]   <- cScen
     vName          <- c( vName, "cScen2" )
@@ -139,47 +142,70 @@ SetupSimulations <- function( cTrialDesign, nQtyReps  )
 
     #Scenario 3
     cScen          <- cScen1
-    cScen$cISADesigns$cISA1$cSimOutcomes$vProbResponse <- c( 0.2, 0.35 )
-    cScen$cISADesigns$cISA2$cSimOutcomes$vProbResponse <- c( 0.2, 0.35 )
-    cScen$cISADesigns$cISA3$cSimOutcomes$vProbResponse <- c( 0.2, 0.35 )
+    cScen$cISADesigns$cISA1$cSimOutcomes$vProbResponse <- c( 0.3, 0.5 )
+    cScen$cISADesigns$cISA2$cSimOutcomes$vProbResponse <- c( 0.3, 0.5 )
+    cScen$cISADesigns$cISA3$cSimOutcomes$vProbResponse <- c( 0.3, 0.5 )
     cScen$Scen     <- 3
     lScen[[ 3 ]]   <- cScen
     vName          <- c( vName, "cScen3" )
     names( lScen ) <- vName
     
-    
-    
-    #Scenario 4
+    #Scenario 4 ##control arm data drift high in the first ISA
     cScen          <- cScen1
-    cScen$cISADesigns$cISA1$cSimOutcomes$vProbResponse <- c( 0.2, 0.4 )
-    cScen$cISADesigns$cISA2$cSimOutcomes$vProbResponse <- c( 0.2, 0.4 )
-    cScen$cISADesigns$cISA3$cSimOutcomes$vProbResponse <- c( 0.2, 0.4 )
+    cScen$cISADesigns$cISA1$cSimOutcomes$vProbResponse <- c( 0.4, 0.4 )
+    cScen$cISADesigns$cISA2$cSimOutcomes$vProbResponse <- c( 0.3, 0.3 )
+    cScen$cISADesigns$cISA3$cSimOutcomes$vProbResponse <- c( 0.3, 0.3 )
     cScen$Scen     <- 4
-    lScen[[ 4]]   <- cScen
+    lScen[[ 4 ]]   <- cScen
     vName          <- c( vName, "cScen4" )
     names( lScen ) <- vName
     
-    
-    #Scenario 5
+    #Scenario 5##control arm data drift high in the first ISA
     cScen          <- cScen1
-    cScen$cISADesigns$cISA1$cSimOutcomes$vProbResponse <- c( 0.2, 0.45 )
-    cScen$cISADesigns$cISA2$cSimOutcomes$vProbResponse <- c( 0.2, 0.45 )
-    cScen$cISADesigns$cISA3$cSimOutcomes$vProbResponse <- c( 0.2, 0.45 )
+    cScen$cISADesigns$cISA1$cSimOutcomes$vProbResponse <- c( 0.4, 0.5 )
+    cScen$cISADesigns$cISA2$cSimOutcomes$vProbResponse <- c( 0.3, 0.4 )
+    cScen$cISADesigns$cISA3$cSimOutcomes$vProbResponse <- c( 0.3, 0.4 )
     cScen$Scen     <- 5
-    lScen[[ 5]]   <- cScen
+    lScen[[ 5 ]]   <- cScen
     vName          <- c( vName, "cScen5" )
     names( lScen ) <- vName
-    
-    
-    
-    #Scenario 6
+    #Scenario 6 ##control arm data drift high in the first ISA
     cScen          <- cScen1
-    cScen$cISADesigns$cISA1$cSimOutcomes$vProbResponse <- c( 0.2, 0.5 )
-    cScen$cISADesigns$cISA2$cSimOutcomes$vProbResponse <- c( 0.2, 0.5 )
-    cScen$cISADesigns$cISA3$cSimOutcomes$vProbResponse <- c( 0.2, 0.5 )
+    cScen$cISADesigns$cISA1$cSimOutcomes$vProbResponse <- c( 0.4, 0.6 )
+    cScen$cISADesigns$cISA2$cSimOutcomes$vProbResponse <- c( 0.3, 0.5 )
+    cScen$cISADesigns$cISA3$cSimOutcomes$vProbResponse <- c( 0.3, 0.5 )
     cScen$Scen     <- 6
-    lScen[[ 6]]   <- cScen
+    lScen[[ 6 ]]   <- cScen
     vName          <- c( vName, "cScen6" )
+    names( lScen ) <- vName
+    
+    #Scenario 7 ##control arm data drift low in the first ISA
+    cScen          <- cScen1
+    cScen$cISADesigns$cISA1$cSimOutcomes$vProbResponse <- c( 0.2, 0.2 )
+    cScen$cISADesigns$cISA2$cSimOutcomes$vProbResponse <- c( 0.3, 0.3 )
+    cScen$cISADesigns$cISA3$cSimOutcomes$vProbResponse <- c( 0.3, 0.3 )
+    cScen$Scen     <- 7
+    lScen[[ 7 ]]   <- cScen
+    vName          <- c( vName, "cScen7" )
+    names( lScen ) <- vName
+    
+    #Scenario 8##control arm data drift low in the first ISA
+    cScen          <- cScen1
+    cScen$cISADesigns$cISA1$cSimOutcomes$vProbResponse <- c( 0.2, 0.3 )
+    cScen$cISADesigns$cISA2$cSimOutcomes$vProbResponse <- c( 0.3, 0.4 )
+    cScen$cISADesigns$cISA3$cSimOutcomes$vProbResponse <- c( 0.3, 0.4 )
+    cScen$Scen     <- 8
+    lScen[[ 8 ]]   <- cScen
+    vName          <- c( vName, "cScen8" )
+    names( lScen ) <- vName
+    #Scenario 9 ##control arm data drift lowh in the first ISA
+    cScen          <- cScen1
+    cScen$cISADesigns$cISA1$cSimOutcomes$vProbResponse <- c( 0.2, 0.4 )
+    cScen$cISADesigns$cISA2$cSimOutcomes$vProbResponse <- c( 0.3, 0.5 )
+    cScen$cISADesigns$cISA3$cSimOutcomes$vProbResponse <- c( 0.3, 0.5 )
+    cScen$Scen     <- 9
+    lScen[[ 9 ]]   <- cScen
+    vName          <- c( vName, "cScen9" )
     names( lScen ) <- vName
 
     # It would be useful to run more scenarios where the effectiveness of the treatment is not
