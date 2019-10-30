@@ -6,6 +6,10 @@ remove( list=ls() )
 
 library( "OCTOPUS", lib.loc = "RLibrary" )
 
+#args <- commandArgs()
+#print( paste( args[1], ", ", args[2]))
+
+
 #This is just for running on the grid
 if (interactive() || Sys.getenv("SGE_TASK_ID") == "") {
     Sys.setenv(SGE_TASK_ID=1)
@@ -46,8 +50,7 @@ source( "SimPatientOutcomes.Binary.R")  # This will add the new outcome
 source( "BinaryFunctions.R" )
 # In this case study we utilize the MVNWithCovarite patient simulator from the base package
 gnPrintDetail <-0
-RunSimulation( cSimulation )
-
+#RunSimulation( cSimulation )
 
 
 # If running on a single instance could just increase the nQtyReps above and use code as is up to the RunSimulation() line.  
@@ -55,7 +58,7 @@ RunSimulation( cSimulation )
 # then creating an R markdown document 
 
 # Due to a bug in the BuildSimulationResultsDataSet( ) we need to run at lease nSGETask = 2
-vSGETasks <- 51:1000  # This will give us 5000 reps (1000 * 5)
+vSGETasks <- 1:1000  # This will give us 5000 reps (1000 * 5)
 
 gDebug <- FALSE
 for ( i in 1:length( vSGETasks ) )
