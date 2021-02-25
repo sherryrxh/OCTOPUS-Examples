@@ -29,10 +29,21 @@
 #   PostProcess.R - Basic graphing functions.
 #
 #   To add Interim Analysis - see Examples in TrialDesign.R
+#
+#   This file is setup to have 3 design options.  All designs have the same number of ISAs
+#       Design 1 - Utilizes the number of patients that was used to create this file and has no interim analysis
+#       Design 2 - Doubles the number of patients in each ISA
+#       Design 3 - Same as design 1 but includes an interim analysis when half the patients have the desired follow-up 
+#
+#   The files RunAnalysis.CategoricalAnalysis.R or SimPatientOutcomes.Categorical.R  are working examples
+#   where the patient outcome is binary and the analysis is a Bayesian model.  You will need to update this to actual
+#   simulate and analyze the data as needed.
 ################################################################################################### #
 
-# In the best
-remove( list=ls() )
+# It is a good practice to clear your environment before building your simulation/design object then
+# then clean it again before you run simulations with only the minimum variables need to avoid potential
+# misuse of variables
+# remove( list=ls() )
 
 # ReadMe - If needed, install the latest copy of OCTOPUS using the remotes package
 #remotes::install_github( "kwathen/OCTOPUS")
@@ -58,7 +69,7 @@ source( "TrialDesign.R")
 source( "SimulationDesign.R")
 source( "TrialDesignFunctions.R")
 
-dQtyMonthsFU       <- 3
+dQtyMonthsFU       <- 6
 mQtyPatientsPerArm <- matrix( c( 50,25,100,125 ), nrow=2, ncol = 2 )
 vISAStartTimes     <- c(  0,6 )
 
@@ -158,32 +169,9 @@ gDebug        <- FALSE   # Can be useful to set if( gDebug ) statements when dev
 gnPrintDetail <- 1       # Higher number cause more printing to be done during the simulation.  A value of 0 prints almost nothing and should be used when running
                          # large scale simulations.
 
-# Files specific for this project that were added and are not available in OCTOPUS.
-# These files create new generic functions that are utilized during the simulation.
-source( 'RunAnalysis.CategoricalAnalysis.R' )
-source( 'SimPatientOutcomes.Categorical.R' )  # This will add the new outcome
-source( "BinaryFunctions.R" )
-
-# The next line will execute the simulations
-#RunSimulation( cSimulation )
-
-
-
-# If running on a single instance (computer) you could just increase the nQtyReps above and use code as is up to the RunSimulation() line.
-# However, to "simulate" running this on the grid and getting multiple output files, combining them
-# then creating an R markdown document the following loop could be executed
-
-# vSGETasks <- 2:20  # This will give us 100 reps (20 * 5)
-# for ( nSGETask in vSGETasks )
-# {
-#     gDebug <- FALSE
-#     Sys.setenv(SGE_TASK_ID= nSGETask )
-#     print( paste( "Simulating task ", nSGETask, " of ", length( vSGETasks ), "..."))
-#     RunSimulation( cSimulation )
-# }
-
 library( "foreach")
-library("parallel")
+library( "parallel" )
+library( "doParallel" )
 # Create a cluster via makeCluster (2 cores)
 nQtyCores  <- detectCores() 
 myCluster2 <- makeCluster( nQtyCores )
@@ -197,7 +185,7 @@ mResults <- foreach( i = 1:nQtyCores, .combine= rbind) %dopar%{
     #This chunk of code will be run for each instance of the loop so it identifies stuff you need such as new functions ect
     # Need to define any functions or variables you want to use in the function you call.   
     # Typically I would be sourcing files here if I needed to or I load the custom R package I have with my simulation code in it. 
-    RunParallelSimulation <- function( nTrialID, cSimulation ) 
+    RunParallelSimulations <- function( nTrialID, cSimulation ) 
     {
         gDebug <- FALSE
         Sys.setenv(SGE_TASK_ID= nTrialID )
@@ -206,9 +194,7 @@ mResults <- foreach( i = 1:nQtyCores, .combine= rbind) %dopar%{
         
         # Files specific for this project that were added and are not available in OCTOPUS.
         # These files create new generic functions that are utilized during the simulation.
-        #source( 'RunAnalysis.CategoricalAnalysis.R' )
-        #source( 'SimPatientOutcomes.Categorical.R' )  # This will add the new outcome
-        #source( "BinaryFunctions.R" )
+        # These files and OCTOPUS are loaded here because it needs to be done for each core.
         library( OCTOPUS )
         source( 'RunAnalysis.CategoricalAnalysis.R' )
         source( 'SimPatientOutcomes.Categorical.R' )  # This will add the new outcome
@@ -217,8 +203,18 @@ mResults <- foreach( i = 1:nQtyCores, .combine= rbind) %dopar%{
         
     }
     
-    RunParallelSimulation( nTrialID = i, cSimulation ) 
+    RunParallelSimulations( nTrialID = i, cSimulation ) 
 }
 dEndTime <- Sys.time()
 print( paste( "It took ", dEndTime - dStartTime, " minutes to run the simulation. "))
 stopCluster( myCluster2  )
+
+
+
+# Post Process ####
+# Create .RData sets of the simulation results
+# simsCombined.Rdata - This will have the all results about the platform and decisions made for each ISA
+# simsISAX.RData will have additional info about ISA X
+# simsMain.RData contain decisions that are made for the platform/ISA
+dfTmp <- OCTOPUS::BuildSimulationResultsDataSet( )   # Assigning to dfTmp but the important outputs are saved as .RData
+

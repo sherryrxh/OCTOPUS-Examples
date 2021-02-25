@@ -1,3 +1,4 @@
+# This file was created as part of the call to OCTOPUS::CreateProject() - minor edits have been made
 
 #### Description ################################################################################################
 #   This project was created utilizing the OCTOPUS package located at https://kwathen.github.io/OCTOPUS/ .
@@ -29,9 +30,16 @@
 #   PostProcess.R - Basic graphing functions.
 #
 #   To add Interim Analysis - see Examples in TrialDesign.R
+#
+#   This file is setup to have 3 design options.  All designs have 2 ISAs 
+#       Design 1 - Utilizes the number of patients that was used to create this file and has no interim analysis
+#       Design 2 - Doubles the number of patients in each ISA
+#       Design 3 - Same as design 1 but includes an interim analysis when half the patients have the desired follow-up 
 ################################################################################################### #
 
-# In the best
+# It is a good practice to clear your environment before building your simulation/design object then
+# then clean it again before you run simulations with only the minimum variables need to avoid potential
+# misuse of variables
 # remove( list=ls() )
 
 # ReadMe - If needed, install the latest copy of OCTOPUS using the remotes package
@@ -57,9 +65,10 @@ source( "TrialDesign.R")
 source( "SimulationDesign.R")
 source( "TrialDesignFunctions.R")
 
-dQtyMonthsFU       <- 3
+dQtyMonthsFU       <- 6
 mQtyPatientsPerArm <- matrix( c( 50,25,100,125 ), nrow=2, ncol = 2 )
 vISAStartTimes     <- c(  0,6 )
+nQtyReps           <- 100 # How many replications to simulate each scenario
 
 cTrialDesign <- SetupTrialDesign( strAnalysisModel   = "CategoricalAnalysis",
                                   strBorrowing       = "AllControls",
@@ -67,7 +76,7 @@ cTrialDesign <- SetupTrialDesign( strAnalysisModel   = "CategoricalAnalysis",
                                   dQtyMonthsFU       = dQtyMonthsFU )
 
 cSimulation  <- SetupSimulations( cTrialDesign,
-                                  nQtyReps                  = 100,
+                                  nQtyReps                  = nQtyReps,
                                   strSimPatientOutcomeClass = "Categorical",
                                   vISAStartTimes            = vISAStartTimes,
                                   nDesign                   = 1)
@@ -90,7 +99,7 @@ cTrialDesign2 <- SetupTrialDesign( strAnalysisModel   = "CategoricalAnalysis",
 
 
 cSimulation2 <- SetupSimulations( cTrialDesign2,
-                                  nQtyReps                  = 100,
+                                  nQtyReps                  = nQtyReps,
                                   strSimPatientOutcomeClass = "Categorical",
                                   vISAStartTimes            = vISAStartTimes,
                                   nDesign                   = 2)
@@ -129,7 +138,7 @@ cTrialDesign3 <- SetupTrialDesign( strAnalysisModel   = "CategoricalAnalysis",
 )
 
 cSimulation3 <- SetupSimulations( cTrialDesign3,
-                                  nQtyReps                  = 100,
+                                  nQtyReps                  = nQtyReps,
                                   strSimPatientOutcomeClass = "Categorical",
                                   vISAStartTimes            = vISAStartTimes,
                                   nDesign                   = 3 )
@@ -163,7 +172,7 @@ source( 'RunAnalysis.CategoricalAnalysis.R' )
 source( 'SimPatientOutcomes.Categorical.R' )  # This will add the new outcome
 source( "BinaryFunctions.R" )
 
-# The next line will execute the simulaitons
+# The next line will execute the simulations
 RunSimulation( cSimulation )
 
 
@@ -182,4 +191,8 @@ RunSimulation( cSimulation )
 # }
 
 
-
+# Post Process ####
+# Create .RData sets of the simulation results
+# simsCombined.Rdata - This will have the main results about the platform and decisions made for each ISA
+# 
+OCTOPUS::BuildSimulationResultsDataSet( )   
