@@ -82,7 +82,7 @@ At the end of an ISA the final analysis is performed and if $p_{MAV} >$ `r cTria
 
 # Simulation Scenarios
 
-Describe scenarios... Possibly like the following
+Describe scenarios... Possibly like the following, but typically best to read of the simulation design elements just in case the scenarios change. 
 
 Scenario 1 - Null case
 
