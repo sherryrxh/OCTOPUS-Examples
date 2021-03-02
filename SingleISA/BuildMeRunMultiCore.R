@@ -21,7 +21,7 @@
 #
 #   SimulationDesign.R - Helps to create the simulation design element.  The main function in this
 #       file is SetupSimulations() which allows for some options to be sent in but for better control
-#       and for adding scenarios please see this file.
+#       and for adding scenarios please see this file.  For example, see this file to add more interim analysis. 
 #
 #   BuildSimulationResult.R After you run a simulation this file provides an example of how to build
 #   the results and create a basic graph with functions found in PostProcess.R
@@ -40,7 +40,9 @@
 #   your use case.
 ################################################################################################### #
 
-# In the best
+# It is a good practice to clear your environment before building your simulation/design object then
+# then clean it again before you run simulations with only the minimum variables need to avoid potential
+# misuse of variables
 remove( list=ls() )
 
 # ReadMe - If needed, install the latest copy of OCTOPUS using the remotes package
@@ -64,23 +66,23 @@ source( "SimulationDesign.R")
 source( "TrialDesignFunctions.R")
 
 dQtyMonthsFU       <- 6
-mQtyPatientsPerArm <- matrix( c( 50,25,100,125 ), nrow=2, ncol = 2 )
-vISAStartTimes     <- c(  0,6 )
+mQtyPatientsPerArm <- matrix( c( 50,100 ), nrow=1, ncol = 2 )
+vISAStartTimes     <- c(  0 )
 
 # Because this simulation option uses multiple cores we need to set the quantity of reps = 1 for each simulation object
 # See section below, Setup of parallel processing,  to set the total quantity of reps that will be simulated, do not adjust the next line
 library( "parallel" )
-nQtyReps           <- ceiling(100/(max( parallel::detectCores() - 1, 1) ))
+nQtyReps           <- ceiling(250/(max( parallel::detectCores() - 1, 1) ))
 
 
-cTrialDesign <- SetupTrialDesign( strAnalysisModel   = "CategoricalAnalysis",
+cTrialDesign <- SetupTrialDesign( strAnalysisModel   = "BetaBinomial",
                                   strBorrowing       = "AllControls",
                                   mPatientsPerArm    = mQtyPatientsPerArm,
                                   dQtyMonthsFU       = dQtyMonthsFU )
 
 cSimulation  <- SetupSimulations( cTrialDesign,
                                   nQtyReps                  = nQtyReps,
-                                  strSimPatientOutcomeClass = "Categorical",
+                                  strSimPatientOutcomeClass = "Binary",
                                   vISAStartTimes            = vISAStartTimes,
                                   nDesign                   = 1)
 
@@ -98,7 +100,7 @@ save( cTrialDesign, file="cTrialDesign.RData" )
 # Example 1 (Design Option 2): Additional Sample Size (more designs )
 # Try another sample size double the original - To show the value of a larger sample size.
 
-cTrialDesign2 <- SetupTrialDesign( strAnalysisModel   = "CategoricalAnalysis",
+cTrialDesign2 <- SetupTrialDesign( strAnalysisModel   = "BetaBinomial",
                                    strBorrowing       = "AllControls",
                                    mPatientsPerArm    = 2*mQtyPatientsPerArm,
                                    dQtyMonthsFU       = dQtyMonthsFU )
@@ -106,7 +108,7 @@ cTrialDesign2 <- SetupTrialDesign( strAnalysisModel   = "CategoricalAnalysis",
 
 cSimulation2 <- SetupSimulations( cTrialDesign2,
                                   nQtyReps                  = nQtyReps,
-                                  strSimPatientOutcomeClass = "Categorical",
+                                  strSimPatientOutcomeClass = "Binary",
                                   vISAStartTimes            = vISAStartTimes,
                                   nDesign                   = 2)
 
@@ -131,7 +133,7 @@ vPLower           <- c( 0.01, 0.01 )
 dFinalPUpper      <- 0.8
 dFinalPLower      <- 0.1
 
-cTrialDesign3 <- SetupTrialDesign( strAnalysisModel   = "CategoricalAnalysis",
+cTrialDesign3 <- SetupTrialDesign( strAnalysisModel   = "BetaBinomial",
                                    strBorrowing       = "AllControls",
                                    mPatientsPerArm    = mQtyPatientsPerArm,
                                    mMinQtyPat         = mMinQtyPats,
@@ -146,7 +148,7 @@ cTrialDesign3 <- SetupTrialDesign( strAnalysisModel   = "CategoricalAnalysis",
 
 cSimulation3 <- SetupSimulations( cTrialDesign3,
                                   nQtyReps                  = nQtyReps,
-                                  strSimPatientOutcomeClass = "Categorical",
+                                  strSimPatientOutcomeClass = "Binary",
                                   vISAStartTimes            = vISAStartTimes,
                                   nDesign                   = 3 )
 

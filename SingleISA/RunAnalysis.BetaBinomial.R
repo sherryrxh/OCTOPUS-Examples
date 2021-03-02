@@ -10,9 +10,9 @@
 #     cRandomizer - The randomizer, mainly used for cases with covariates
 #
 #############################################################################################################################.
-RunAnalysis.CategoricalAnalysis <- function( cAnalysis, lDataAna,  nISAAnalysisIndx, bIsFinalISAAnalysis, cRandomizer )
+RunAnalysis.BetaBinomial <- function( cAnalysis, lDataAna,  nISAAnalysisIndx, bIsFinalISAAnalysis, cRandomizer )
 {
-    #print( paste( "RunAnalysis.CategoricalAnalysis"))
+    #print( paste( "RunAnalysis.BetaBinomial"))
 
    # Prior are in cAnalysis$vPriorA and cAnalysis$vPriorB
 

@@ -1,4 +1,4 @@
-# This file was created as part of the call to OCTOPUS::CreateProject() - minor edits have been made
+# This file was created as part of the call to OCTOPUS::CreateProject()
 
 #### Description ################################################################################################
 #   This project was created utilizing the OCTOPUS package located at https://kwathen.github.io/OCTOPUS/ .
@@ -31,10 +31,14 @@
 #
 #   To add Interim Analysis - see Examples in TrialDesign.R
 #
-#   This file is setup to have 3 design options.  All designs have 2 ISAs 
+#   This file is setup to have 3 design options.  All designs have the same number of ISAs
 #       Design 1 - Utilizes the number of patients that was used to create this file and has no interim analysis
 #       Design 2 - Doubles the number of patients in each ISA
-#       Design 3 - Same as design 1 but includes an interim analysis when half the patients have the desired follow-up 
+#       Design 3 - Same as design 1 but includes an interim analysis when half the patients have the desired follow-up
+#
+#   If the files RunAnalysis.XXX.R or SimPatientOutcomes.XXX.R are included they are working example
+#   where the patient outcome is binary and the analysis is a Bayesian model.  You will need to update this per
+#   your use case.
 ################################################################################################### #
 
 # It is a good practice to clear your environment before building your simulation/design object then
@@ -84,11 +88,14 @@ cSimulation  <- SetupSimulations( cTrialDesign,
 #Save the design file because we will need it in the RMarkdown file for processing simulation results
 save( cTrialDesign, file="cTrialDesign.RData" )
 
+# Additional Designs ####
+
 # If you do not want to add additional designs begin commenting out or deleting this section of code
 # Beginning of multiple design options - This code block could be removed.  It provides an example of
 # how to add additional designs such as sample sizes, adding interim analysis or changing analysis methods.  This approach allow the
 # graphs to display design options side-by-side.
 
+# Design Option 2 ####
 # Example 1 (Design Option 2): Additional Sample Size (more designs )
 # Try another sample size double the original - To show the value of a larger sample size.
 
@@ -108,6 +115,7 @@ cSimulation$SimDesigns[[2]] <- cSimulation2$SimDesigns[[1]]
 
 save( cTrialDesign2, file = "cTrialDesign2.RData" )
 
+# Design Option 3 ####
 
 # Example 2 (Design Option 3): Add interim analysis ( IA ) where the IA is performed at half the patients.
 # At the IA if the posterior probability that the difference between treatment and control is is greater than MAV is greater than 0.99
@@ -190,9 +198,10 @@ RunSimulation( cSimulation )
 #     RunSimulation( cSimulation )
 # }
 
-
 # Post Process ####
 # Create .RData sets of the simulation results
 # simsCombined.Rdata - This will have the main results about the platform and decisions made for each ISA
-# 
-OCTOPUS::BuildSimulationResultsDataSet( )   
+#
+OCTOPUS::BuildSimulationResultsDataSet( )
+
+

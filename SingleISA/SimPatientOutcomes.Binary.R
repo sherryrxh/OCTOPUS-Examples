@@ -5,9 +5,9 @@
 #   TODO: Test this function.
 ################################################################################################### #
 
-SimPatientOutcomes.Categorical <- function(  cSimOutcomes, cISADesign, dfPatCovISA )
+SimPatientOutcomes.Binary <- function(  cSimOutcomes, cISADesign, dfPatCovISA )
 {
-    #print( "Executing SimPatientOutcomes.Categorical ...")
+    #print( "Executing SimPatientOutcomes.Binary ...")
     if( !is.null(  dfPatCovISA  ) )
         stop( "SimPatientOutcomes.Binary is not designed to incorporate patient covariates and  dfPatCovISA  is not NULL.")
 

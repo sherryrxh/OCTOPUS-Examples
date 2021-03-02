@@ -1,3 +1,4 @@
+# This file was created as part of the call to OCTOPUS::CreateProject()
 
 #### Description ################################################################################################
 #   This project was created utilizing the OCTOPUS package located at https://kwathen.github.io/OCTOPUS/ .
@@ -40,8 +41,10 @@
 #   your use case.
 ################################################################################################### #
 
-# In the best
-remove( list=ls() )
+# It is a good practice to clear your environment before building your simulation/design object then
+# then clean it again before you run simulations with only the minimum variables need to avoid potential
+# misuse of variables
+# remove( list=ls() )
 
 # ReadMe - If needed, install the latest copy of OCTOPUS using the remotes package
 #remotes::install_github( "kwathen/OCTOPUS")
@@ -49,7 +52,7 @@ remove( list=ls() )
 library( "OCTOPUS" )
 
 # ReadMe - Useful statements for running on a grid such as linux based grid
-if(interactive() || Sys.getenv("SGE_TASK_ID") == "") {
+if (interactive() || Sys.getenv("SGE_TASK_ID") == "") {
   #The SGE_TASK_ID is used if you are running on a linux based grid
     Sys.setenv(SGE_TASK_ID=1)
 }
@@ -59,28 +62,26 @@ source( "Functions.R")           # Contains a function to delete any previous re
 
 gdConvWeeksToMonths <- 12/52     # Global variable to convert weeks to months, the g is for global as it may be used
                                  # in functions
+
+
+
 source( "TrialDesign.R")
 source( "SimulationDesign.R")
 source( "TrialDesignFunctions.R")
 
 dQtyMonthsFU       <- 6
-mQtyPatientsPerArm <- matrix( c( 50,25,100,125 ), nrow=2, ncol = 2 )
-vISAStartTimes     <- c(  0,6 )
+mQtyPatientsPerArm <- matrix( c( 50,100 ), nrow=1, ncol = 2 )
+vISAStartTimes     <- c(  0 )
+nQtyReps           <- 250 # How many replications to simulate each scenario
 
-# Because this simulation option uses multiple cores we need to set the quantity of reps = 1 for each simulation object
-# See section below, Setup of parallel processing,  to set the total quantity of reps that will be simulated, do not adjust the next line
-library( "parallel" )
-nQtyReps           <- ceiling(100/(max( parallel::detectCores() - 1, 1) ))
-
-
-cTrialDesign <- SetupTrialDesign( strAnalysisModel   = "CategoricalAnalysis",
+cTrialDesign <- SetupTrialDesign( strAnalysisModel   = "BetaBinomial",
                                   strBorrowing       = "AllControls",
                                   mPatientsPerArm    = mQtyPatientsPerArm,
                                   dQtyMonthsFU       = dQtyMonthsFU )
 
 cSimulation  <- SetupSimulations( cTrialDesign,
                                   nQtyReps                  = nQtyReps,
-                                  strSimPatientOutcomeClass = "Categorical",
+                                  strSimPatientOutcomeClass = "Binary",
                                   vISAStartTimes            = vISAStartTimes,
                                   nDesign                   = 1)
 
@@ -98,7 +99,7 @@ save( cTrialDesign, file="cTrialDesign.RData" )
 # Example 1 (Design Option 2): Additional Sample Size (more designs )
 # Try another sample size double the original - To show the value of a larger sample size.
 
-cTrialDesign2 <- SetupTrialDesign( strAnalysisModel   = "CategoricalAnalysis",
+cTrialDesign2 <- SetupTrialDesign( strAnalysisModel   = "BetaBinomial",
                                    strBorrowing       = "AllControls",
                                    mPatientsPerArm    = 2*mQtyPatientsPerArm,
                                    dQtyMonthsFU       = dQtyMonthsFU )
@@ -106,7 +107,7 @@ cTrialDesign2 <- SetupTrialDesign( strAnalysisModel   = "CategoricalAnalysis",
 
 cSimulation2 <- SetupSimulations( cTrialDesign2,
                                   nQtyReps                  = nQtyReps,
-                                  strSimPatientOutcomeClass = "Categorical",
+                                  strSimPatientOutcomeClass = "Binary",
                                   vISAStartTimes            = vISAStartTimes,
                                   nDesign                   = 2)
 
@@ -131,7 +132,7 @@ vPLower           <- c( 0.01, 0.01 )
 dFinalPUpper      <- 0.8
 dFinalPLower      <- 0.1
 
-cTrialDesign3 <- SetupTrialDesign( strAnalysisModel   = "CategoricalAnalysis",
+cTrialDesign3 <- SetupTrialDesign( strAnalysisModel   = "BetaBinomial",
                                    strBorrowing       = "AllControls",
                                    mPatientsPerArm    = mQtyPatientsPerArm,
                                    mMinQtyPat         = mMinQtyPats,
@@ -146,7 +147,7 @@ cTrialDesign3 <- SetupTrialDesign( strAnalysisModel   = "CategoricalAnalysis",
 
 cSimulation3 <- SetupSimulations( cTrialDesign3,
                                   nQtyReps                  = nQtyReps,
-                                  strSimPatientOutcomeClass = "Categorical",
+                                  strSimPatientOutcomeClass = "Binary",
                                   vISAStartTimes            = vISAStartTimes,
                                   nDesign                   = 3 )
 
@@ -171,41 +172,36 @@ rm( list=(ls()[ls()!="cSimulation" ]))
 # Declare global variable (prefix with g to make it clear)
 gDebug        <- FALSE   # Can be useful to set if( gDebug ) statements when developing new functions
 gnPrintDetail <- 1       # Higher number cause more printing to be done during the simulation.  A value of 0 prints almost nothing and should be used when running
-# large scale simulations.
+                         # large scale simulations.
+
+# Files specific for this project that were added and are not available in OCTOPUS.
+# These files create new generic functions that are utilized during the simulation.
+source( 'RunAnalysis.BetaBinomial.R' )
+source( 'SimPatientOutcomes.Binary.R' )  # This will add the new outcome
+source( "BinaryFunctions.R" )
+
+# The next line will execute the simulations
+RunSimulation( cSimulation )
 
 
 
-#################################################################################################### .
-# Setup of parallel processing                                                                  ####
-#################################################################################################### .
+# If running on a single instance (computer) you could just increase the nQtyReps above and use code as is up to the RunSimulation() line.
+# However, to "simulate" running this on the grid and getting multiple output files, combining them
+# then creating an R markdown document the following loop could be executed
 
-library( "foreach")
-library( "parallel" )
-library( "doParallel" )
-library( "foreach")
-library( "utils" )
-library( "iterators" )
-library( "doSNOW" )
-library( "snow" )
-source( "RunParallelSimulations.R" ) # This file has a version of simulations that utilize more cores
-
-# Use 1 less than the number of cores available
-nQtyCores  <- max( detectCores() - 1, 1 )
-
-# The nStartIndex and nEndIndex are used to index the simulations and hence the output files see the RunParallelSimulations.R file
-# for more details
-RunParallelSimulations( nStartIndex = 1, nEndIndex = nQtyCores,  nQtyCores, cSimulation )
-
-# The next option will run the parallel simulations but with a visual update on the % complete
-
-RunParallelSimulationsWithUpdate( nStartIndex = 1, nEndIndex = nQtyCores,  nQtyCores, cSimulation )
-
+# vSGETasks <- 2:20  # This will give us 100 reps (20 * 5)
+# for ( nSGETask in vSGETasks )
+# {
+#     gDebug <- FALSE
+#     Sys.setenv(SGE_TASK_ID= nSGETask )
+#     print( paste( "Simulating task ", nSGETask, " of ", length( vSGETasks ), "..."))
+#     RunSimulation( cSimulation )
+# }
 
 # Post Process ####
 # Create .RData sets of the simulation results
-# simsCombined.Rdata - This will have the all results about the platform and decisions made for each ISA
-# simsISAX.RData will have additional info about ISA X
-# simsMain.RData contain decisions that are made for the platform/ISA
-dfTmp <- OCTOPUS::BuildSimulationResultsDataSet( )   # Assigning to dfTmp but the important outputs are saved as .RData
+# simsCombined.Rdata - This will have the main results about the platform and decisions made for each ISA
+#
+OCTOPUS::BuildSimulationResultsDataSet( )
 
 
