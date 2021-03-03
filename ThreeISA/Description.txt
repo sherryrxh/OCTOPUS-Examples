@@ -1,0 +1,11 @@
+
+Description
+This example template project is intended to give the user a starting point.
+Start by reading the BuildMe.R or BuildMeRunMultiCore.R files.
+This example has 3 ISAs.   For each ISA, the first interim analysis is done when half the patients have 6 months of FU, then montly thereafter.  The control arm utilizes a Beta( 10, 40 ) prior.   ISAs 2 and 3 have fewer patients on control.  This can be found in the TrialDesign.R file.   
+
+In addition, for ISAs 2 and 3 the ISA start time (when the trial enters the platform) is a random unifor between the time provided and 3 months, eg ISA2 starts some time betwen months 6 and 9 and ISA 2 starts some time between months 12 and 15.  The ramp up in recruitment rate is slower for this example.  Both of the changes can be found in the SimulationDesign.R file
+
+The trial design object is created using the function in TrialDesign.R
+The simulation design is created by the function in the SimualtionDesign.R
+
