@@ -12,8 +12,10 @@
 #############################################################################################################################.
 RunAnalysis.BetaBinomial <- function( cAnalysis, lDataAna,  nISAAnalysisIndx, bIsFinalISAAnalysis, cRandomizer )
 {
-    #print( paste( "RunAnalysis.BetaBinomial"))
+    print( paste( "RunAnalysis.BetaBinomial"))
 
+    if( bKyleDebug == TRUE )
+        browser()
    # Prior are in cAnalysis$vPriorA and cAnalysis$vPriorB
 
     vISA <- lDataAna$vISA
