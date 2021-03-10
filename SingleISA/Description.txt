@@ -19,3 +19,6 @@ Start by reading the BuildMe.R file.
 The trial design object is created using the function in TrialDesign.R
 The simulation design is created by the function in the SimualtionDesign.R
 
+In this example the platform trial will consist of a single Intervention Specific Appendix (ISA) which had control and experimental. 
+A new patient simulation is added called "Binary" and the function SimPatientOutcomes.Binary.R is where the patient data is simulated.
+A new analysis is added called BetaBinomial that uses a Beta Prior on Binary Data (conjugate model for ease) and the analysis function can be found in RunAnalysis.BetaBinomial.R

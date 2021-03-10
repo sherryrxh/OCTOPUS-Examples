@@ -180,6 +180,7 @@ source( 'RunAnalysis.BetaBinomial.R' )
 source( 'SimPatientOutcomes.Binary.R' )  # This will add the new outcome
 source( "BinaryFunctions.R" )
 
+save( cSimulation, file="cSimulation.RData")
 # The next line will execute the simulations
 RunSimulation( cSimulation )
 
