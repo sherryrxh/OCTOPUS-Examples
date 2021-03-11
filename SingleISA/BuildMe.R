@@ -99,22 +99,22 @@ save( cTrialDesign, file="cTrialDesign.RData" )
 # Example 1 (Design Option 2): Additional Sample Size (more designs )
 # Try another sample size double the original - To show the value of a larger sample size.
 
-# cTrialDesign2 <- SetupTrialDesign( strAnalysisModel   = "BetaBinomial",
-#                                    strBorrowing       = "AllControls",
-#                                    mPatientsPerArm    = 2*mQtyPatientsPerArm,
-#                                    dQtyMonthsFU       = dQtyMonthsFU )
-# 
-# 
-# cSimulation2 <- SetupSimulations( cTrialDesign2,
-#                                   nQtyReps                  = nQtyReps,
-#                                   strSimPatientOutcomeClass = "Binary",
-#                                   vISAStartTimes            = vISAStartTimes,
-#                                   nDesign                   = 2)
-# 
-# cSimulation$SimDesigns[[2]] <- cSimulation2$SimDesigns[[1]]
-# 
-# save( cTrialDesign2, file = "cTrialDesign2.RData" )
-# 
+cTrialDesign2 <- SetupTrialDesign( strAnalysisModel   = "BetaBinomial",
+                                   strBorrowing       = "AllControls",
+                                   mPatientsPerArm    = 2*mQtyPatientsPerArm,
+                                   dQtyMonthsFU       = dQtyMonthsFU )
+
+
+cSimulation2 <- SetupSimulations( cTrialDesign2,
+                                  nQtyReps                  = nQtyReps,
+                                  strSimPatientOutcomeClass = "Binary",
+                                  vISAStartTimes            = vISAStartTimes,
+                                  nDesign                   = 2)
+
+cSimulation$SimDesigns[[2]] <- cSimulation2$SimDesigns[[1]]
+
+save( cTrialDesign2, file = "cTrialDesign2.RData" )
+
 # # Design Option 3 ####
 # 
 # # Example 2 (Design Option 3): Add interim analysis ( IA ) where the IA is performed at half the patients.
@@ -123,38 +123,38 @@ save( cTrialDesign, file="cTrialDesign.RData" )
 # # At the end of the trial if the posterior probability that the difference between treatment and control is is greater than MAV is greater than 0.8
 # # then a Go decision is reached, if it is less than 0.1 a No Go decision
 # 
-# mMinQtyPats       <- cbind( floor(apply( mQtyPatientsPerArm , 1, sum )/2),  apply( mQtyPatientsPerArm , 1, sum ) )
-# vMinFUTime        <- rep( dQtyMonthsFU, ncol( mMinQtyPats) )
-# dQtyMonthsBtwIA   <- 0
-# 
-# vPUpper           <- c( 0.99,0.99 )
-# vPLower           <- c( 0.01, 0.01 )
-# dFinalPUpper      <- 0.8
-# dFinalPLower      <- 0.1
-# 
-# cTrialDesign3 <- SetupTrialDesign( strAnalysisModel   = "BetaBinomial",
-#                                    strBorrowing       = "AllControls",
-#                                    mPatientsPerArm    = mQtyPatientsPerArm,
-#                                    mMinQtyPat         = mMinQtyPats,
-#                                    vMinFUTime         = vMinFUTime,
-#                                    dQtyMonthsBtwIA    = dQtyMonthsFU,
-#                                    vPUpper            = vPUpper,
-#                                    vPLower            = vPLower,
-#                                    dFinalPUpper       = dFinalPUpper,
-#                                    dFinalPLower       = dFinalPLower
-# 
-# )
-# 
-# cSimulation3 <- SetupSimulations( cTrialDesign3,
-#                                   nQtyReps                  = nQtyReps,
-#                                   strSimPatientOutcomeClass = "Binary",
-#                                   vISAStartTimes            = vISAStartTimes,
-#                                   nDesign                   = 3 )
-# 
-# cSimulation$SimDesigns[[3]] <- cSimulation3$SimDesigns[[1]]
-# 
-# save( cTrialDesign3, file = "cTrialDesign3.RData" )
-# 
+mMinQtyPats       <- cbind( floor(apply( mQtyPatientsPerArm , 1, sum )/2),  apply( mQtyPatientsPerArm , 1, sum ) )
+vMinFUTime        <- rep( dQtyMonthsFU, ncol( mMinQtyPats) )
+dQtyMonthsBtwIA   <- 0
+
+vPUpper           <- c( 0.99,0.99 )
+vPLower           <- c( 0.01, 0.01 )
+dFinalPUpper      <- 0.8
+dFinalPLower      <- 0.1
+
+cTrialDesign3 <- SetupTrialDesign( strAnalysisModel   = "BetaBinomial",
+                                   strBorrowing       = "AllControls",
+                                   mPatientsPerArm    = mQtyPatientsPerArm,
+                                   mMinQtyPat         = mMinQtyPats,
+                                   vMinFUTime         = vMinFUTime,
+                                   dQtyMonthsBtwIA    = dQtyMonthsFU,
+                                   vPUpper            = vPUpper,
+                                   vPLower            = vPLower,
+                                   dFinalPUpper       = dFinalPUpper,
+                                   dFinalPLower       = dFinalPLower
+
+)
+
+cSimulation3 <- SetupSimulations( cTrialDesign3,
+                                  nQtyReps                  = nQtyReps,
+                                  strSimPatientOutcomeClass = "Binary",
+                                  vISAStartTimes            = vISAStartTimes,
+                                  nDesign                   = 3 )
+
+cSimulation$SimDesigns[[3]] <- cSimulation3$SimDesigns[[1]]
+
+save( cTrialDesign3, file = "cTrialDesign3.RData" )
+
 
 #Often it is good to keep the design objects for utilizing in a report
 

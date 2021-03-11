@@ -3,8 +3,8 @@ title: "Primary Objects for Simulation"
 author: "J. Kyle Wathen"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -37,6 +37,7 @@ load( file = "SingleISA/cTrialDesign.Rdata")
 ![Figure 1: Overview of trial design](SingleISA/Images/cTrialDesignView1.png)
 
 The cTrialDesign is a list of the needed information and contains a list of cISADesigns, in this example `cTrialDesign$cISADesings` is a list of length 1, indicating a single ISA platform.  If the platform had more than one ISA, then the length of `cTrialDesign$cISADesings` would be greater than 1 like the following 2 ISA platform
+
 ![Figure 2: Overview of 2 ISA trial design](SingleISA/Images/cTwoISADesignExample.png)
 
 
