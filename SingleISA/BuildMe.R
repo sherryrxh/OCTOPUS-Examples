@@ -173,7 +173,7 @@ rm( list=(ls()[ls()!="cSimulation" ]))
 gDebug        <- FALSE   # Can be useful to set if( gDebug ) statements when developing new functions
 gnPrintDetail <- 1       # Higher number cause more printing to be done during the simulation.  A value of 0 prints almost nothing and should be used when running
                          # large scale simulations.
-bKyleDebug <- TRUE
+bKyleDebug <- FALSE
 # Files specific for this project that were added and are not available in OCTOPUS.
 # These files create new generic functions that are utilized during the simulation.
 source( 'RunAnalysis.BetaBinomial.R' )
