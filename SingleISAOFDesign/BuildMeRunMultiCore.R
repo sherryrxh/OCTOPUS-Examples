@@ -40,7 +40,7 @@ dQtyMonthsBtwIA   <- 0
 
 
 vISAStartTimes     <- c(  0 )
-nQtyReps           <- 250 # How many replications to simulate each scenario
+nQtyReps           <- 313 # How many replications to simulate each scenario
 vPValueCutoffForFutility <- c( 0.9, 0.048 )
 vPValueCutoffForSuccess  <- c( 0.048, 0.048 )
 
@@ -78,12 +78,13 @@ save( cTrialDesign, file="cTrialDesign.RData" )
 # At the end of the trial if the posterior probability that the difference between treatment and control is is greater than MAV is greater than 0.8
 # then a Go decision is reached, if it is less than 0.1 a No Go decision
 
-mMinQtyPats       <- cbind( floor(apply( mQtyPatientsPerArm , 1, sum )/2),  apply( mQtyPatientsPerArm , 1, sum ) )
+mQtyPatientsPerArm <- matrix( c( 293,293 ), nrow=1, ncol = 2 )
+mMinQtyPats       <- cbind( floor(apply( mQtyPatientsPerArm , 1, sum )/3),floor(2*apply( mQtyPatientsPerArm , 1, sum )/3),  apply( mQtyPatientsPerArm , 1, sum ) )
 vMinFUTime        <- rep( dQtyMonthsFU, ncol( mMinQtyPats) )
 dQtyMonthsBtwIA   <- 0
 
-vPValueCutoffForFutility <- c( 0.9,   0.048 )
-vPValueCutoffForSuccess  <- c( 0.006, 0.048 )
+vPValueCutoffForFutility <- c( 0.9,   0.048, 0.045 )
+vPValueCutoffForSuccess  <- c( 0.001, 0.016, 0.045 )
 
 cTrialDesign2 <- SetupTrialDesign( strAnalysisModel   = "TTestOneSided",
                                    strBorrowing       = "AllControls",
@@ -148,7 +149,7 @@ library( "snow" )
 source( "RunParallelSimulations.R" ) # This file has a version of simulations that utilize more cores
 
 # Use 1 less than the number of cores available
-nQtyCores  <- 10
+nQtyCores  <- 8
 
 # The nStartIndex and nEndIndex are used to index the simulations and hence the output files see the RunParallelSimulations.R file
 # for more details

@@ -43,7 +43,7 @@ dQtyMonthsBtwIA   <- 0
 
 
 vISAStartTimes     <- c(  0 )
-nQtyReps           <- 5 # How many replications to simulate each scenario
+nQtyReps           <- 2 # How many replications to simulate each scenario
 vPValueCutoffForFutility <- c( 0.9, 0.048 )
 vPValueCutoffForSuccess  <- c( 0.048, 0.048 )
 
@@ -81,12 +81,13 @@ save( cTrialDesign, file="cTrialDesign.RData" )
 # At the end of the trial if the posterior probability that the difference between treatment and control is is greater than MAV is greater than 0.8
 # then a Go decision is reached, if it is less than 0.1 a No Go decision
 
-mMinQtyPats       <- cbind( floor(apply( mQtyPatientsPerArm , 1, sum )/2),  apply( mQtyPatientsPerArm , 1, sum ) )
+mQtyPatientsPerArm <- matrix( c( 293,293 ), nrow=1, ncol = 2 )
+mMinQtyPats       <- cbind( floor(apply( mQtyPatientsPerArm , 1, sum )/3),floor(2*apply( mQtyPatientsPerArm , 1, sum )/3),  apply( mQtyPatientsPerArm , 1, sum ) )
 vMinFUTime        <- rep( dQtyMonthsFU, ncol( mMinQtyPats) )
 dQtyMonthsBtwIA   <- 0
 
-vPValueCutoffForFutility <- c( 0.9, 0.048 )
-vPValueCutoffForSuccess  <- c( 0.048, 0.048 )
+vPValueCutoffForFutility <- c( 0.9,   0.048, 0.045 )
+vPValueCutoffForSuccess  <- c( 0.001, 0.016, 0.045 )
 
 cTrialDesign2 <- SetupTrialDesign( strAnalysisModel   = "TTestOneSided",
                                    strBorrowing       = "AllControls",
@@ -126,7 +127,7 @@ rm( list=(ls()[ls()!="cSimulation" ]))
 
 # Declare global variable (prefix with g to make it clear)
 gDebug        <- FALSE   # Can be useful to set if( gDebug ) statements when developing new functions
-gnPrintDetail <- 1       # Higher number cause more printing to be done during the simulation.  A value of 0 prints almost nothing and should be used when running
+gnPrintDetail <- 0       # Higher number cause more printing to be done during the simulation.  A value of 0 prints almost nothing and should be used when running
                          # large scale simulations.
 bDebug2 <- FALSE
 # Files specific for this project that were added and are not available in OCTOPUS.

@@ -40,7 +40,18 @@ RunParallelSimulations <- function( nStartIndex = 1, nEndIndex, nQtyCores, cSimu
         }
         print( paste( "... Starting foreach at:", Sys.time()))
         mResults <- foreach( i = nStartIndex:nEndIndex, .combine= rbind) %dopar%{
-            RunSimulationsOnCore( nTrialID = i, cSimulation )
+            tryCatch(
+                {
+                    RunSimulationsOnCore( nTrialID = i, cSimulation )
+                    strDone <- "Done"
+                    write( strDone, file=paste0( "log/log", i, ".txt") )
+                },
+                error = function( e ){
+                   
+                },
+                warning = function(w){
+                   
+                })
         }
         print( paste( "... Ending foreach at:", Sys.time()))
 
