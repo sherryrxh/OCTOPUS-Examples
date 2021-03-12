@@ -7,6 +7,10 @@
 
 SimPatientOutcomes.Normal <- function(  cSimOutcomes, cISADesign, dfPatCovISA )
 {
+    # print( "SimPatientOutcomes.Normal")
+    # if( bDebug2 == TRUE )
+    #     browser()
+    
     #print( "Executing SimPatientOutcomes.Normal ...")
     if( !is.null(  dfPatCovISA  ) )
         stop( "SimPatientOutcomes.Binary is not designed to incorporate patient covariates and  dfPatCovISA  is not NULL.")
@@ -14,15 +18,16 @@ SimPatientOutcomes.Normal <- function(  cSimOutcomes, cISADesign, dfPatCovISA )
 
     mOutcome        <- NULL
 
-    vMeans          <- cSimOutcomes$vMeans
+    vMeans          <- cSimOutcomes$vTrueMean
     vQtyPats        <- cISADesign$vQtyPats
+    dStdDev         <- cSimOutcomes$dTrueStdDev
 
     vPatTrt         <- rep( cISADesign$vTrtLab, vQtyPats )
     iArm            <- 1
     for( iArm in 1:length( vQtyPats ) )
     {
 
-        vPatientOutcomes <- rbinom( vQtyPats[ iArm ], 1, vMeans[ iArm ] )
+        vPatientOutcomes <- rnorm( vQtyPats[ iArm ], vMeans[ iArm ], dStdDev )
         #print( paste( "iArm ", iArm, " Prob Resp ", vProbResponse[ iArm ], " # Pats ", vQtyPats[ iArm ], " % resp ", sum(vPatientOutcomes)/vQtyPats[iArm]))
         mOutcome         <- rbind( mOutcome, matrix( vPatientOutcomes , ncol = 1) )
     }

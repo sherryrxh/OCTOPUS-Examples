@@ -12,6 +12,7 @@
 RunParallelSimulations <- function( nStartIndex = 1, nEndIndex, nQtyCores, cSimulation )
 {
     dStartTime <- Sys.time()
+    print( paste( "Start Time:", dStartTime ))
     tryCatch(
     {
         myCluster2 <- makeCluster( nQtyCores )
@@ -37,10 +38,11 @@ RunParallelSimulations <- function( nStartIndex = 1, nEndIndex, nQtyCores, cSimu
             RunSimulation( cSimulation )
 
         }
-
+        print( paste( "... Starting foreach at:", Sys.time()))
         mResults <- foreach( i = nStartIndex:nEndIndex, .combine= rbind) %dopar%{
             RunSimulationsOnCore( nTrialID = i, cSimulation )
         }
+        print( paste( "... Ending foreach at:", Sys.time()))
 
     },
     error = function( e ){
@@ -50,10 +52,13 @@ RunParallelSimulations <- function( nStartIndex = 1, nEndIndex, nQtyCores, cSimu
         message("A warning occured:\n", w)
     },
     finally = {
-        message("Stopping cluster")
+        
+        message(paste( "Stopping cluster at:", Sys.time()) )
         stopCluster( myCluster2  )
+        print( paste( "Cluster Stopped at: ", Sys.time()))
     })
     dEndTime <- Sys.time()
+    print( paste( "End Time:", dEndTime ))
     print( paste( "It took ", difftime(dEndTime,  dStartTime, units = "mins"), " minutes to run the simulation. "))
 
 }

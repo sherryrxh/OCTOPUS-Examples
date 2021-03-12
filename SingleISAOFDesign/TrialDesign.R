@@ -15,8 +15,7 @@
 #############################################################################################################################.
 
 SetupTrialDesign <- function( strAnalysisModel, strBorrowing, mPatientsPerArm, dQtyMonthsFU,
-                              mMinQtyPats = NULL, vMinFUTime = NULL, dQtyMonthsBtwIA = 0,
-                              vPUpper = NULL, vPLower = NULL, dFinalPUpper = 1.0, dFinalPLower = 0.0 )
+                              mMinQtyPats = NULL, vMinFUTime = NULL, dQtyMonthsBtwIA = 0, ... )
 {
     dConvWeeksToMonths <- 12/52
 
@@ -24,7 +23,6 @@ SetupTrialDesign <- function( strAnalysisModel, strBorrowing, mPatientsPerArm, d
     strBorrow         <- strBorrowing
     strModel          <- strAnalysisModel
     bIncreaseParam    <- TRUE
-    dMAV              <- 0.1
 
     # By default this functions sets up a trial with only a Final Analysis(FA).
     # However, in the OCTOPUS package interim analysis (IAs) are specified in one of two ways:
@@ -72,7 +70,7 @@ SetupTrialDesign <- function( strAnalysisModel, strBorrowing, mPatientsPerArm, d
 
     # It is often necessary to include when patients will have outcomes observed, especially in cases like a repeated measure.
     # This next variable is included as an example but is not required for an analysis.
-    vObsTimeInMonths  <- c( 6 )  # patients have outcome observed at 6 months, change as needed to match the project.
+    vObsTimeInMonths  <- c( 1 )  # patients have outcome observed at 6 months, change as needed to match the project.
 
     # Important Note ####
     #   The vObsTimeInMonths is used to describe when outcomes are observed, however, if dQtyMonthsFU < vObsTimeInMonths
@@ -84,10 +82,6 @@ SetupTrialDesign <- function( strAnalysisModel, strBorrowing, mPatientsPerArm, d
     #  ISA 1 Information                                                ####
     ########################################################################.
 
-    # Prior parameters for Control, Treatment.  For this example, the priors are added to the analysis object list
-    # and is intended to show an example of how additional parameters are included if needed in the analysis function.
-    vPriorA   <- c( 0.2, 0.2 )
-    vPriorB   <- c( 0.8, 0.8 )
 
     # Create ISAs
     nQtyISAs      <- nrow( mPatientsPerArm )
@@ -111,28 +105,20 @@ SetupTrialDesign <- function( strAnalysisModel, strBorrowing, mPatientsPerArm, d
         #TODO(Kyle) - Generalize vTrtLab to use the number of columns in the matrix in-case the user has more than treatment and control in trial
 
         vTrtLab  <- c( 1,  nCurrentTrtID )
-        cISAInfo <- CreateISA(  vQtyPats         = mPatientsPerArm[ iISA, ],
+        cISAInfo <- CreateNewISA(  vQtyPats         = mPatientsPerArm[ iISA, ],
                                 vTrtLab          = vTrtLab,
                                 vObsTimeInMonths = vObsTimeInMonths,
-                                dMAV             = dMAV,
-                                vPUpper          = vPUpper,
-                                vPLower          = vPLower,
-                                dFinalPUpper     = dFinalPUpper,
-                                dFinalPLower     = dFinalPLower,
-                                bIncreaseParam   = bIncreaseParam,
                                 strBorrow        = strBorrow,
                                 strModel         = strModel,
                                 vMinQtyPats      = vMinQtyPats,
                                 vMinFUTime       = vMinFUTime,
                                 dQtyMonthsBtwIA  = dQtyMonthsBtwIA,
-                                vPriorA          = vPriorA,
-                                vPriorB          = vPriorB )
+                                ...)
 
         nCurrentTrtID <- nCurrentTrtID + 1
 
         lISAs[[ paste( "cISA", iISA, "Info", sep="" ) ]] <- cISAInfo
     }
-
 
 
 
