@@ -12,38 +12,35 @@
 #############################################################################################################################.
 RunAnalysis.TTestOneSided <- function( cAnalysis, lDataAna,  nISAAnalysisIndx, bIsFinalISAAnalysis, cRandomizer )
 {
-    
-    lCI      <- GetCILimits(  cAnalysis, nISAAnalysisIndx, bIsFinalISAAnalysis )
-    dLowerCI <- lCI$dLowerCI
-    dUpperCI <- lCI$dUpperCI
-    #if( dLowerCI  == 1 - dUpperCI )  #Symmetrical CI so only need to do the test once to get the desired CI
-    #{
-        dCILevel <- 1.0 - dLowerCI
+    #print( "RunAnalysis.TTestOneSided")
+    # if( bDebug2 == TRUE )
+    #     browser()
+    lTTest  <- t.test(lDataAna$vOut ~ as.factor(lDataAna$vTrt), alternative = c("less"),mu = 0, var.equal = TRUE)
         
-        
-        lTTest  <- t.test(lDataAna$vOut ~ as.factor(lDataAna$vTrt), alternative = c("greater"),mu = 0, exact = NULL, correct = TRUE,  conf.int = TRUE, conf.level = dCILevel)
-        Means   <- lTTest["estimate"]$estimate[[1]] - lTTest["estimate"]$estimate[[2]] #pbo- trt
-        dLower  <- lTTest["conf.int"]$conf.int[[1]]
-        dUpper  <- lTTest["conf.int"]$conf.int[[2]]
-    # }
-    # else
-    # {
-    #     #The desired CI is not symmetrical so we need to do the test twice
-    #     
-    #     #Get the CI for the Lower Limit
-    #     dCILevel <- 1 - 2*dLowerCI
-    #     lTTest  <- t.test(lDataAna$vOut ~ as.factor(lDataAna$vTrt), alternative = c("greater"),mu = 0, exact = NULL, correct = TRUE,  conf.int = TRUE, conf.level = dCILevel)
-    #     Means   <- lTTest["estimate"]$estimate[[1]] - lTTest["estimate"]$estimate[[2]] #pbo- trt
-    #     dLower  <- lTTest["conf.int"]$conf.int[[1]]
-    #     
-    #     
-    #     dCILevel <- 1 - 2*(1 - dUpperCI)
-    #     lTTest  <- t.test(lDataAna$vOut ~ as.factor(lDataAna$vTrt), alternative = c("greater"),mu = 0, exact = NULL, correct = TRUE,  conf.int = TRUE, conf.level = dCILevel)
-    #     dUpper  <- lTTest["conf.int"]$conf.int[[2]]
-    #     
-    # }
+    dPValue <- lTTest["p.value"][[1]]
+   
+    #print( paste( "Pvalue ", dPValue))
     
-    lRet <- MakeDecisionBasedOnCI( dLower, dUpper, cAnalysis )
+    # The lRet must be a list list( nGo = nGo, nNoGo = nNoGo, nPause = nPause) 
+    
+    dCutoffFut <- cAnalysis$vPValueCutoffForFutility[ nISAAnalysisIndx ]
+    dCutoffSuc <- cAnalysis$vPValueCutoffForSuccess[ nISAAnalysisIndx ]
+    
+    lRet <- list( nGo = 0, nNoGo = 0, nPause = 1 )
+    
+    if( dPValue <= dCutoffSuc)
+    {
+        # Success
+        lRet <- list( nGo = 1, nNoGo = 0, nPause = 0 )
+    }
+    else if( dPValue > dCutoffFut )
+    {
+        # Futility
+        lRet <- list( nGo = 0, nNoGo = 1, nPause = 0 )
+    }
+
+    
+    
     lRet$cRandomizer <- cRandomizer
     
     return( lRet )

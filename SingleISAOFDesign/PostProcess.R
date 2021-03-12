@@ -160,7 +160,7 @@ PlotResults <- function( dfResults, file="",
                 ylab("Probability") +
                 ggTitle +
                 scale_fill_manual(values=c(colorPalette[7],colorPalette[5], colorPalette[4])) +
-                scale_y_continuous(breaks=seq(0,1,by=.2), minor_breaks=seq( 0.05,1, by=0.05),limit=c(0,1) )+
+                scale_y_continuous(breaks=seq(0,1,by=.2), minor_breaks=seq( 0.05,1, by=0.05) )+
                 theme_bw() + 
                 theme(plot.title =element_text(hjust=0.5), 
                       plot.subtitle = element_text(hjust = 0.5), panel.grid.major.y = element_line(size=1.5)) +
@@ -179,7 +179,7 @@ PlotResults <- function( dfResults, file="",
                 ylab("Probability") +
                 ggTitle +
                 scale_fill_manual(values=c(colorPalette[7],colorPalette[5], colorPalette[4])) +
-                scale_y_continuous(breaks=seq(0,1,by=.2), minor_breaks=seq( 0.05,1, by=0.05),limit=c(0,1) )+
+                scale_y_continuous(breaks=seq(0,1,by=.2), minor_breaks=seq( 0.05,1, by=0.05) )+
                 theme_bw() + 
                 theme(plot.title =element_text(hjust=0.5), 
                       plot.subtitle = element_text(hjust = 0.5), panel.grid.major.y = element_line(size=1.5)) +
@@ -241,7 +241,7 @@ PlotResultsWithIAInfo <- function( dfResults, file="",
                 ylab("Probability") +
                 ggTitle+
                 scale_fill_manual(values=c( colorPalette[2],colorPalette[7], colorPalette[5],colorPalette[3],colorPalette[4])) +
-                scale_y_continuous(breaks=seq(0,1,by=.2), minor_breaks=seq( 0.05,1, by=0.05),limit=c(0,1) )+
+                scale_y_continuous(breaks=seq(0,1,by=.2), minor_breaks=seq( 0.05,1, by=0.05) )+
                 theme_bw() +
                 theme(plot.title =element_text(hjust=0.5), panel.grid.major.y = element_line(size=1.5)) +
                 theme( legend.position  ="top", legend.direction="horizontal", legend.title  =element_blank() )+
@@ -259,7 +259,7 @@ PlotResultsWithIAInfo <- function( dfResults, file="",
                 ylab("Probability") +
                 ggTitle +
                 scale_fill_manual(values=c( colorPalette[2],colorPalette[7], colorPalette[5],colorPalette[3],colorPalette[4])) +
-                scale_y_continuous(breaks=seq(0,1,by=.2), minor_breaks=seq( 0.05,1, by=0.05),limit=c(0,1) )+
+                scale_y_continuous(breaks=seq(0,1,by=.2), minor_breaks=seq( 0.05,1, by=0.05) )+
                 theme_bw() +
                 theme(plot.title =element_text(hjust=0.5), panel.grid.major.y = element_line(size=1.5)) +
                 theme( legend.position  ="top", legend.direction="horizontal", legend.title  =element_blank() )+

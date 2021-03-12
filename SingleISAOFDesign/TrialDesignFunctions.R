@@ -187,6 +187,102 @@ AddOutcome  <- function( cISAInfo ,
     
 }
 
+
+################################################################################################################## #
+# Create an ISA structure
+#   Arguments:
+#       vQtyPats:  The number of patients on Control, Treatment 1, ... Treatment X in in this ISA
+#                   length( vQtyPats) >= 2; typically there is control and 1 treatment in an ISA --> length(vQtyPats)==2
+#       vTrtLab:   Control ALWAYS has a label 1, then labels for other treatments in this ISA
+#                   length( vQtyPats ) = length( vTrtLab )
+#       vObsTimeInMonths: A vector of time (in months) that patient outcomes are observed.
+#       bIncreaseParam: TRUE or FALSE, is an increase in parameter value the goal? eg higher response rate 
+#           TRUE --> The MAV is in terms of Q_Trt - Q_Control and use Pr( Q_Trt - Q_Control > MAV ) for decision making
+#           FALSE --> The MAV is in terms of Q_Control - Q_trt and use Pr( Q_Control-Q_Trt > MAV ) for decision making
+#       strBorrow: "AllControls" or "NoBorrowing"
+#       strModel:  "BetaBinomial","BayesianNormalAR1", "BayesianNormal"
+################################################################################################################## #
+CreateNewISA <- function(   vQtyPats, 
+                         vTrtLab,
+                         strBorrow       = "AllControls", 
+                         strModel        = "BetaBinomial",
+                         vObsTimeInMonths, 
+                         vMinQtyPats     = c(-1), 
+                         vMinFUTime      = c(-1), 
+                         dQtyMonthsBtwIA = 0,
+                         ...)
+{
+    
+    
+
+    
+    
+    
+    bNoIA              <- FALSE
+    nMaxQtyPats        <- sum( vQtyPats )
+    
+    if( all(vMinQtyPats == -1))
+    {
+        vMinQtyPats        <- c( nMaxQtyPats, nMaxQtyPats )# nMaxQtyPats * 0.5  #The minimum number of patients at before a compound is dropped
+        
+        vMinFUTime         <- c(0, 0 )
+    }
+    
+    strRandomizer      <- "EqualRandomizer"
+    
+    if( length( vQtyPats ) == 2 )  #This ISA will have Control and 1 treatment
+        lDecisionOut       <- structure(list(strApproachIA = "default", strApproachFA="default"), class = "General")
+    else
+        lDecisionOut       <- structure(list(strApproachIA = "AtLeastOne", strApproachFA="AtLeastOne"), class = "GeneralDoses")
+    
+    
+    #Define the MAV and TV
+    #Outcome 1
+    vAnalysisInfo1      <- c( strModel, "MAVOnly", "ProcessSingleTimeOutcome" )
+    
+   
+    
+    cISA1Info <- NewISAInfo( vTrtLab,
+                             vQtyPats,
+                             vMinQtyPats,
+                             vMinFUTime,
+                             dQtyMonthsBtwIA,
+                             strRandomizer,
+                             lDecisionOut,
+                             strBorrow )
+    
+    cISAInfo <- AddNewOutcome( cISAInfo      = cISA1Info,
+                                    vAnalysisInfo = vAnalysisInfo1,
+                                    vTrtLab       = vTrtLab,
+                                    vObsTime      = vObsTimeInMonths,
+                                    ...)
+    return( cISAInfo )
+}
+
+
+################################################################################################################## #
+#  Add an outcome to the cISAInfo that is generic, eg the ... are put directly into the list
+################################################################################################################## #
+AddNewOutcome  <- function( cISAInfo, vAnalysisInfo, vTrtLab,  vObsTime , ... )
+{
+    #Analysis object for outcome 1
+    cAnalysis <-  structure( list( ...,
+                                   vTrtLab       = vTrtLab,
+                                   vObsTime      = vObsTime),
+                             class= vAnalysisInfo)
+    
+    
+    
+    cISAAnalysis <- cISAInfo$cISAAnalysis
+    nOut <- length( cISAAnalysis$vAnalysis ) + 1
+    
+    cISAAnalysis$vAnalysis[[ nOut  ]] <- cAnalysis
+    cISAInfo$cISAAnalysis = cISAAnalysis
+    return( cISAInfo )
+    
+}
+
+
 ################################################################################################################## #
 #  Add an outcome to the cISAInfo - Based ona Bayesian analysis (eg vPUpper)
 ################################################################################################################## #

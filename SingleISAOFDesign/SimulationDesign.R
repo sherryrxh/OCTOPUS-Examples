@@ -41,13 +41,15 @@ SetupSimulations <- function( cTrialDesign, nQtyReps,
     #ReadMe - The example loop below created a list of ISA simulation objects.  Update as needed for particular use case.
     # The goal of the loop is to fill cISADesigns with the info for each ISA.  The elements of cISADesigns should be
     # cISA1, cISA2,...
+    
+    # This loop is setting up the structure for the cSimOutcome so make sure to add the desired paramters here for simulation and also below
     for( iISA in 1:nQtyISAs )
     {
         cISAStart    <- structure( list( dParam1 = vISAStartTimes[ iISA ]), class="SetTime" )
         vObsTime1    <- cTrialDesign$cISADesigns$cISA1$cISAAnalysis$vAnalysis[[1]]$vObsTime
 
         #Set up the patient simulator - in this example it assume treatment and control both have a response rate of 0.2.  More scenarios are added below
-        cSimOutcome  <- structure(list( vProbResponse = c(0.2, 0.2 )), class=c( strSimPatientOutcomeClass ))
+        cSimOutcome  <- structure(list( vTrueMean = c(0.0, 0.0 ), dTrueStdDev = 1), class=c( strSimPatientOutcomeClass ))
         cISAInfo     <- structure( list(cSimOutcomes = cSimOutcome,  cSimISAStart = cISAStart ) )
 
         cISADesigns[[ paste( "cISA", iISA, sep="" ) ]] <- cISAInfo
@@ -102,20 +104,21 @@ SetupSimulations <- function( cTrialDesign, nQtyReps,
     lScen <- list( cScen1 = cScen1 )
     vName <- c( "cScen1" )
 
-    # Example of updating and adding another scenario.
+    # Example of updating and adding another scenario, null case was added above
 
-    # Add the additional scenario - Each scenario would increase the % of patients that are responders
-    vTrueRespRateTrt <- c( 0.3, 0.4, 0.5 )  #This vector is used in the loop below
-
-    for( iScen in 1:length( vTrueRespRateTrt ) )   # Loop over the scenarios in vTrueRespRate
+    # For this exercise you did not need the probability of response but rather the true mean
+    vTrueMeanTrt <- c( 0.3 )  #This vector is used in the loop below
+    vTrueStdDev  <- c(  1   )
+    for( iScen in 1:length( vTrueMeanTrt ) )   # Loop over the scenarios in vTrueMeanTrt
     {
         cScen          <- cScen1
 
-        #In the next loop we are changing the % responders for the treatment arm in all ISAs
+        
         # For the example SimPatientOutcomes.XXX there the vector
         for( iISA in 1:nQtyISAs )
         {
-            cScen$cISADesigns[[ paste( "cISA", iISA, sep="") ]]$cSimOutcomes$vProbResponse <- c( 0.2, vTrueRespRateTrt[ iScen ] )
+            cScen$cISADesigns[[ paste( "cISA", iISA, sep="") ]]$cSimOutcomes$vTrueMean <- c( 0, vTrueMeanTrt[ iScen ] )
+            cScen$cISADesigns[[ paste( "cISA", iISA, sep="") ]]$cSimOutcomes$dTrueStdDev <- vTrueStdDev[ iScen ]
         }
 
         #Note: Using iScen + 1 because the null was added as scenario 1

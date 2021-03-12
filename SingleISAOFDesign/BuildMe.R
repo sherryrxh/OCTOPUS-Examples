@@ -7,40 +7,6 @@
 #   may be variables with the prefix TEMP_ which will need to be updated.
 ################################################################################################### #
 
-################################################################################################### #
-#   ReadMe - Source the set up files                                                             ####
-#   Rather than have the BuildMe.R create local variables, functions are used to avoid having
-#   local variables. This helps to reduce the chance of a bug due to typos in functions.
-#   The design files create functions that are helpful for setting up the trial design and
-#   simulation design objects but are then removed as they are not needed during the simulations.
-#   See below for the source command on the files that create new functions needed in the simulation.
-#
-#   TrialDesign.R - Contains a function to created the trial design option.
-#       The main function in this file is SetupTrialDesign() which has a few arguments
-#       to allow for options in the set up.  However, for finer control of the trial design see the
-#       function and functions listed in TrialDesignFunctions.R
-#
-#   SimulationDesign.R - Helps to create the simulation design element.  The main function in this
-#       file is SetupSimulations() which allows for some options to be sent in but for better control
-#       and for adding scenarios please see this file.
-#
-#   BuildSimulationResult.R After you run a simulation this file provides an example of how to build
-#   the results and create a basic graph with functions found in PostProcess.R
-#
-#   PostProcess.R - Basic graphing functions.
-#
-#   To add Interim Analysis - see Examples in TrialDesign.R
-#
-#   This file is setup to have 3 design options.  All designs have the same number of ISAs
-#       Design 1 - Utilizes the number of patients that was used to create this file and has no interim analysis
-#       Design 2 - Doubles the number of patients in each ISA
-#       Design 3 - Same as design 1 but includes an interim analysis when half the patients have the desired follow-up
-#
-#   If the files RunAnalysis.XXX.R or SimPatientOutcomes.XXX.R are included they are working example
-#   where the patient outcome is binary and the analysis is a Bayesian model.  You will need to update this per
-#   your use case.
-################################################################################################### #
-
 # It is a good practice to clear your environment before building your simulation/design object then
 # then clean it again before you run simulations with only the minimum variables need to avoid potential
 # misuse of variables
@@ -70,14 +36,29 @@ source( "SimulationDesign.R")
 source( "TrialDesignFunctions.R")
 
 dQtyMonthsFU       <- 1
-mQtyPatientsPerArm <- matrix( c( 235,235 ), nrow=1, ncol = 2 )
+mQtyPatientsPerArm <- matrix( c( 192, 192 ), nrow=1, ncol = 2 )
+mMinQtyPats       <- cbind( floor(apply( mQtyPatientsPerArm , 1, sum )/2),  apply( mQtyPatientsPerArm , 1, sum ) )
+vMinFUTime        <- rep( dQtyMonthsFU, ncol( mMinQtyPats) )
+dQtyMonthsBtwIA   <- 0
+
+
 vISAStartTimes     <- c(  0 )
-nQtyReps           <- 250 # How many replications to simulate each scenario
+nQtyReps           <- 5 # How many replications to simulate each scenario
+vPValueCutoffForFutility <- c( 0.9, 0.048 )
+vPValueCutoffForSuccess  <- c( 0.048, 0.048 )
+
+
 
 cTrialDesign <- SetupTrialDesign( strAnalysisModel   = "TTestOneSided",
                                   strBorrowing       = "AllControls",
                                   mPatientsPerArm    = mQtyPatientsPerArm,
-                                  dQtyMonthsFU       = dQtyMonthsFU )
+                                  mMinQtyPat         = mMinQtyPats,
+                                  vMinFUTime         = vMinFUTime,
+                                  dQtyMonthsFU       = dQtyMonthsFU,
+                                  dQtyMonthsBtwIA    = dQtyMonthsBtwIA,
+                                  vPValueCutoffForFutility = vPValueCutoffForFutility,
+                                  
+                                  vPValueCutoffForSuccess = vPValueCutoffForSuccess )
 
 cSimulation  <- SetupSimulations( cTrialDesign,
                                   nQtyReps                  = nQtyReps,
@@ -92,7 +73,7 @@ save( cTrialDesign, file="cTrialDesign.RData" )
 
 
 
-# Design Option 3 ####
+# Design Option 2 ####
 
 # Example 2 (Design Option 3): Add interim analysis ( IA ) where the IA is performed at half the patients.
 # At the IA if the posterior probability that the difference between treatment and control is is greater than MAV is greater than 0.99
@@ -104,10 +85,8 @@ mMinQtyPats       <- cbind( floor(apply( mQtyPatientsPerArm , 1, sum )/2),  appl
 vMinFUTime        <- rep( dQtyMonthsFU, ncol( mMinQtyPats) )
 dQtyMonthsBtwIA   <- 0
 
-vPUpper           <- c( 0.99, 0.99 )
-vPLower           <- c( 0.01, 0.01 )
-dFinalPUpper      <- 0.8
-dFinalPLower      <- 0.1
+vPValueCutoffForFutility <- c( 0.9, 0.048 )
+vPValueCutoffForSuccess  <- c( 0.048, 0.048 )
 
 cTrialDesign2 <- SetupTrialDesign( strAnalysisModel   = "TTestOneSided",
                                    strBorrowing       = "AllControls",
@@ -115,10 +94,9 @@ cTrialDesign2 <- SetupTrialDesign( strAnalysisModel   = "TTestOneSided",
                                    mMinQtyPat         = mMinQtyPats,
                                    vMinFUTime         = vMinFUTime,
                                    dQtyMonthsBtwIA    = dQtyMonthsBtwIA,
-                                   vPUpper            = vPUpper,
-                                   vPLower            = vPLower,
-                                   dFinalPUpper       = dFinalPUpper,
-                                   dFinalPLower       = dFinalPLower
+                                   vPValueCutoffForFutility = vPValueCutoffForFutility,
+                                   
+                                   vPValueCutoffForSuccess = vPValueCutoffForSuccess
 
 )
 
@@ -150,7 +128,7 @@ rm( list=(ls()[ls()!="cSimulation" ]))
 gDebug        <- FALSE   # Can be useful to set if( gDebug ) statements when developing new functions
 gnPrintDetail <- 1       # Higher number cause more printing to be done during the simulation.  A value of 0 prints almost nothing and should be used when running
                          # large scale simulations.
-
+bDebug2 <- FALSE
 # Files specific for this project that were added and are not available in OCTOPUS.
 # These files create new generic functions that are utilized during the simulation.
 source( 'RunAnalysis.TTestOneSided.R' )
@@ -158,8 +136,10 @@ source( 'SimPatientOutcomes.Normal.R' )  # This will add the new outcome
 source( "BinaryFunctions.R" )
 
 # The next line will execute the simulations
+t1 <- Sys.time()
 RunSimulation( cSimulation )
-
+t2 <- Sys.time()
+t2 - t1
 
 
 # If running on a single instance (computer) you could just increase the nQtyReps above and use code as is up to the RunSimulation() line.

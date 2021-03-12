@@ -14,8 +14,7 @@ Requirements:
 
 
 Description
-This example template project is intended to give the user a starting point.
-Start by reading the BuildMe.R file.
-The trial design object is created using the function in TrialDesign.R
-The simulation design is created by the function in the SimualtionDesign.R
+The goal of this project is to create a single ISA platform and compare 2 design options.   The first design option will have 1 interim analysis and the second will have 2.  
+
+The patient data should be simulated from a normal distribution and do t-test to compare treatments.   Then use known cutoff values obtained for something like EAST in your decision making.  
 
