@@ -38,6 +38,11 @@ source( "TrialDesignFunctions.R")
 
 dQtyMonthsFU       <- 1
 
+# Design option 1 ####
+# This design option with have 2 ISAs  and each ISA will have 1 interim analysis and a final analysis
+# At IA 1 if p-value > 0.9 --> futility, p-value < 0.048 --> Early success (Go) otherwise continue
+# at IA 2 if p-value > 0.048 -->futility, p-value < 0.048 --> success (Go) 
+
 # UPDATE: Adding a 2nd row for the mQtyPatientsPerArm will add another ISA with  192 per arm
 mQtyPatientsPerArm <- matrix( c( 192, 192,
                                  192, 192 ), nrow=2, ncol = 2 )
@@ -64,26 +69,24 @@ cTrialDesign <- SetupTrialDesign( strAnalysisModel   = "TTestOneSided",
                                   dQtyMonthsFU       = dQtyMonthsFU,
                                   dQtyMonthsBtwIA    = dQtyMonthsBtwIA,
                                   vPValueCutoffForFutility = vPValueCutoffForFutility,
-                                  vPValueCutoffForSuccess  = vPValueCutoffForSuccess )
+                                  vPValueCutoffForSuccess  = vPValueCutoffForSuccess)
 
 cSimulation  <- SetupSimulations( cTrialDesign,
                                   nQtyReps                  = nQtyReps,
                                   strSimPatientOutcomeClass = "Normal",
                                   vISAStartTimes            = vISAStartTimes,
-                                  nDesign                   = 1)
+                                  nDesign                   = 1 )
 
 #Save the design file because we will need it in the RMarkdown file for processing simulation results
 save( cTrialDesign, file="cTrialDesign.RData" )
 
-# Additional Designs ####
-
-
+####################################################################################################### .
 
 # Design Option 2 ####
-# This design option with have 2 ISAs but and each ISA will have 2 interim analysis and a final 
+# This design option with have 2 ISAs  and each ISA will have 2 interim analysis and a final analysis
 # At IA 1 if p-value > 0.9 --> futility, p-value < 0.001 --> Early success (Go) otherwise continue
-# at IA 2 if p-value > 0.048 -->futility, p-value < 0.016 --> Early success (Go) otherwise contine
-# at final if p-value > 0.045 -->Futlity, Go otherwise
+# at IA 2 if p-value > 0.048 -->futility, p-value < 0.016 --> Early success (Go) otherwise continue
+# at final if p-value > 0.045 -->Futility, Go otherwise
 # 
 # UPDATE: Adding a 2nd row for the mQtyPatientsPerArm will add another ISA with  192 per arm
 mQtyPatientsPerArm <- matrix( c( 293, 293,

@@ -14,7 +14,7 @@
 SetupSimulations <- function( cTrialDesign, nQtyReps,
                               strSimPatientOutcomeClass,
                               vISAStartTimes = NULL,
-                              nDesign = 1)
+                              nDesign = 1, ...)
 {
 
     vObsTime1    <- cTrialDesign$cISADesigns$cISA1$cISAAnalysis$vAnalysis[[1]]$vObsTime
@@ -49,7 +49,9 @@ SetupSimulations <- function( cTrialDesign, nQtyReps,
         vObsTime1    <- cTrialDesign$cISADesigns$cISA1$cISAAnalysis$vAnalysis[[1]]$vObsTime
 
         #Set up the patient simulator - in this example it assume treatment and control both have a response rate of 0.2.  More scenarios are added below
-        cSimOutcome  <- structure(list( vTrueMean = c(0.0, 0.0 ), dTrueStdDev = 1), class=c( strSimPatientOutcomeClass ))
+        cSimOutcome  <- structure(list( vTrueMean = c(0.0, 0.0 ), 
+                                        dTrueStdDev = 1,
+                                        ...), class=c( strSimPatientOutcomeClass ))
         cISAInfo     <- structure( list(cSimOutcomes = cSimOutcome,  cSimISAStart = cISAStart ) )
 
         cISADesigns[[ paste( "cISA", iISA, sep="" ) ]] <- cISAInfo
