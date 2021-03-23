@@ -14,7 +14,11 @@
 SetupSimulations <- function( cTrialDesign, nQtyReps,
                               strSimPatientOutcomeClass,
                               vISAStartTimes = NULL,
-                              nDesign = 1, ...)
+                              nDesign = 1, 
+                              vTrueMean = vTrueMean,
+                              mPointVal = mPointVal,
+                              dTrueStdDev = dTrueStdDev,
+                              ...)
 {
 
     vObsTime1    <- cTrialDesign$cISADesigns$cISA1$cISAAnalysis$vAnalysis[[1]]$vObsTime
@@ -49,8 +53,9 @@ SetupSimulations <- function( cTrialDesign, nQtyReps,
         vObsTime1    <- cTrialDesign$cISADesigns$cISA1$cISAAnalysis$vAnalysis[[1]]$vObsTime
 
         #Set up the patient simulator - in this example it assume treatment and control both have a response rate of 0.2.  More scenarios are added below
-        cSimOutcome  <- structure(list( vTrueMean = c(0.0, 0.0 ), 
-                                        dTrueStdDev = 1,
+        cSimOutcome  <- structure(list(  vTrueMean = vTrueMean,
+                                         dTrueStdDev = dTrueStdDev,
+                                         vPointVal = mPointVal[1,],
                                         ...), class=c( strSimPatientOutcomeClass ))
         cISAInfo     <- structure( list(cSimOutcomes = cSimOutcome,  cSimISAStart = cISAStart ) )
 
@@ -109,9 +114,9 @@ SetupSimulations <- function( cTrialDesign, nQtyReps,
     # Example of updating and adding another scenario, null case was added above
 
     # For this exercise you did not need the probability of response but rather the true mean
-    vTrueMeanTrt <- c( 0.3 )  #This vector is used in the loop below
-    vTrueStdDev  <- c(  1   )
-    for( iScen in 1:length( vTrueMeanTrt ) )   # Loop over the scenarios in vTrueMeanTrt
+    #vTrueMeanTrt <- c( 0.3 )  #This vector is used in the loop below
+    #vTrueStdDev  <- c(  1   )
+    for( iScen in 1:(nrow(mPointVal)-1) )   # Loop over the scenarios in vTrueMeanTrt
     {
         cScen          <- cScen1
 
@@ -119,8 +124,8 @@ SetupSimulations <- function( cTrialDesign, nQtyReps,
         # For the example SimPatientOutcomes.XXX there the vector
         for( iISA in 1:nQtyISAs )
         {
-            cScen$cISADesigns[[ paste( "cISA", iISA, sep="") ]]$cSimOutcomes$vTrueMean <- c( 0, vTrueMeanTrt[ iScen ] )
-            cScen$cISADesigns[[ paste( "cISA", iISA, sep="") ]]$cSimOutcomes$dTrueStdDev <- vTrueStdDev[ iScen ]
+            cScen$cISADesigns[[ paste( "cISA", iISA, sep="") ]]$cSimOutcomes$vPointVal <- mPointVal[iScen+1,] 
+
         }
 
         #Note: Using iScen + 1 because the null was added as scenario 1

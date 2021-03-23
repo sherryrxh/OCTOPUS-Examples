@@ -59,6 +59,13 @@ nQtyReps           <- 5 # How many replications to simulate each scenario
 vPValueCutoffForFutility <- c( 0.9, 0.048 )
 vPValueCutoffForSuccess  <- c( 0.048, 0.048 )
 
+## My true parameters
+vTrueMean <- c(0, 0.3)
+mPointVal <- matrix( c( 0, 0,
+                        0.3, 0.3,
+                        -0.3, -0.3), nrow=3, ncol=2, byrow=TRUE)
+dTrueStdDev <- 1 
+vPointPct <- c(0.3, 0.1)
 
 
 cTrialDesign <- SetupTrialDesign( strAnalysisModel   = "TTestOneSided",
@@ -75,7 +82,11 @@ cSimulation  <- SetupSimulations( cTrialDesign,
                                   nQtyReps                  = nQtyReps,
                                   strSimPatientOutcomeClass = "Normal",
                                   vISAStartTimes            = vISAStartTimes,
-                                  nDesign                   = 1 )
+                                  nDesign                   = 1,
+                                  vTrueMean = vTrueMean,
+                                  mPointVal = mPointVal,
+                                  vPointPct = vPointPct,
+                                  dTrueStdDev = dTrueStdDev)
 
 #Save the design file because we will need it in the RMarkdown file for processing simulation results
 save( cTrialDesign, file="cTrialDesign.RData" )
@@ -104,6 +115,8 @@ vISAStartTimes     <- c(  0, 4 )
 vPValueCutoffForFutility <- c( 0.9,   0.048, 0.045 )
 vPValueCutoffForSuccess  <- c( 0.001, 0.016, 0.045 )
 
+
+
 cTrialDesign2 <- SetupTrialDesign( strAnalysisModel   = "TTestOneSided",
                                    strBorrowing       = "AllControls",
                                    mPatientsPerArm    = mQtyPatientsPerArm,
@@ -117,7 +130,11 @@ cSimulation2 <- SetupSimulations( cTrialDesign2,
                                   nQtyReps                  = nQtyReps,
                                   strSimPatientOutcomeClass = "Normal",
                                   vISAStartTimes            = vISAStartTimes,
-                                  nDesign                   = 2 )
+                                  nDesign                   = 2,
+                                  vTrueMean = vTrueMean,
+                                  mPointVal = mPointVal,
+                                  vPointPct = vPointPct,
+                                  dTrueStdDev = dTrueStdDev)
 
 cSimulation$SimDesigns[[2]] <- cSimulation2$SimDesigns[[1]]
 
@@ -141,18 +158,19 @@ rm( list=(ls()[ls()!="cSimulation" ]))
 gDebug        <- FALSE   # Can be useful to set if( gDebug ) statements when developing new functions
 gnPrintDetail <- 1       # Higher number cause more printing to be done during the simulation.  A value of 0 prints almost nothing and should be used when running
                          # large scale simulations.
-bDebug2 <- FALSE
+bDebug2 <- TRUE
+XRDebug <- FALSE
 # Files specific for this project that were added and are not available in OCTOPUS.
 # These files create new generic functions that are utilized during the simulation.
 source( 'RunAnalysis.TTestOneSided.R' )
-source( 'SimPatientOutcomes.Normal.R' )  # This will add the new outcome
+source( 'SimPatientOutcomes.NormalWithPointMass.R' )  # This will add the new outcome
 source( "BinaryFunctions.R" )
 
 # The next line will execute the simulations
 t1 <- Sys.time()
 RunSimulation( cSimulation )
 t2 <- Sys.time()
-t2 - t1
+t2 - t1 #Took ~ 4Mins to complete 5 reps
 
 
 # If running on a single instance (computer) you could just increase the nQtyReps above and use code as is up to the RunSimulation() line.
